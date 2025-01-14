@@ -7,9 +7,9 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
-import com.example.compose.darkScheme
-import com.example.compose.lightScheme
-import com.example.ui.theme.baseline
+import com.cmp.showcase.ui.core.theme.baseline
+import com.cmp.showcase.ui.core.theme.darkScheme
+import com.cmp.showcase.ui.core.theme.lightScheme
 
 @Composable
 actual fun MyTheme(darkTheme: Boolean, content: @Composable() () -> Unit) {
