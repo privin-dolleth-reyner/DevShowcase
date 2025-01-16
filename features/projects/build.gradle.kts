@@ -24,7 +24,7 @@ kotlin {
         iosSimulatorArm64()
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
-            baseName = "UiCore"
+            baseName = "featuresProjects"
             isStatic = true
         }
     }
@@ -33,12 +33,12 @@ kotlin {
 
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
-        moduleName = "uiCore"
+        moduleName = "featuresProjects"
         browser {
             val rootDirPath = project.rootDir.path
             val projectDirPath = project.projectDir.path
             commonWebpackConfig {
-                outputFileName = "uiCore.js"
+                outputFileName = "featuresProjects.js"
                 devServer = (devServer ?: KotlinWebpackConfig.DevServer()).apply {
                     static = (static ?: mutableListOf()).apply {
                         // Serve sources to debug inside browser
@@ -53,24 +53,13 @@ kotlin {
 
     sourceSets{
         commonMain.dependencies {
-            api(compose.runtime)
-            api(compose.foundation)
-            api(compose.material)
-            api(compose.ui)
-            api(compose.components.resources)
-            api(compose.components.uiToolingPreview)
-            api(libs.androidx.lifecycle.viewmodel)
-            api(libs.androidx.lifecycle.runtime.compose)
-        }
-
-        androidMain.dependencies {
-            implementation(libs.androidx.core.ktx)
+            implementation(projects.ui.core)
         }
     }
 }
 
 android {
-    namespace = "com.cmp.showcase.ui.core"
+    namespace = "com.cmp.showcase.features.projects"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {

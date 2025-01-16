@@ -24,7 +24,7 @@ kotlin {
         iosSimulatorArm64()
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
-            baseName = "UiCore"
+            baseName = "dataCore"
             isStatic = true
         }
     }
@@ -33,12 +33,12 @@ kotlin {
 
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
-        moduleName = "uiCore"
+        moduleName = "dataCore"
         browser {
             val rootDirPath = project.rootDir.path
             val projectDirPath = project.projectDir.path
             commonWebpackConfig {
-                outputFileName = "uiCore.js"
+                outputFileName = "dataCore.js"
                 devServer = (devServer ?: KotlinWebpackConfig.DevServer()).apply {
                     static = (static ?: mutableListOf()).apply {
                         // Serve sources to debug inside browser
@@ -53,24 +53,14 @@ kotlin {
 
     sourceSets{
         commonMain.dependencies {
-            api(compose.runtime)
-            api(compose.foundation)
-            api(compose.material)
-            api(compose.ui)
-            api(compose.components.resources)
-            api(compose.components.uiToolingPreview)
-            api(libs.androidx.lifecycle.viewmodel)
-            api(libs.androidx.lifecycle.runtime.compose)
-        }
-
-        androidMain.dependencies {
-            implementation(libs.androidx.core.ktx)
+            api(libs.datastore)
+            api(libs.datastore.preferences)
         }
     }
 }
 
 android {
-    namespace = "com.cmp.showcase.ui.core"
+    namespace = "com.cmp.showcase.data.core"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
