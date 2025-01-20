@@ -15,11 +15,14 @@ compose-multiplatform = "1.7.0"
 junit = "4.13.2"
 kotlin = "2.1.0"
 kotlinx-coroutines = "1.9.0"
-datastore = "1.1.1"
+datastore = "1.1.2"
+cmp-settings-version = "1.2.0"
 navigation = "2.8.0-alpha10"
 serialization-plugin = "2.1.0"
 serialization = "1.8.0"
-
+koin = "4.0.1"
+datastorePreferencesCoreJvm = "1.1.2"
+ktor = "3.0.3"
 
 
 [libraries]
@@ -38,8 +41,32 @@ androidx-lifecycle-runtime-compose = { group = "org.jetbrains.androidx.lifecycle
 kotlinx-coroutines-swing = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-swing", version.ref = "kotlinx-coroutines" }
 datastore = { module = "androidx.datastore:datastore", version.ref ="datastore"}
 datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref ="datastore"}
+cmp-settings = { module = "com.russhwolf:multiplatform-settings", version.ref = "cmp-settings-version"}
 navigation-compose = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref ="navigation"}
 kotlinx-serializable = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref ="serialization"}
+koin-bom = { module = "io.insert-koin:koin-bom", version.ref = "koin" }
+koin-core = { module = "io.insert-koin:koin-core" }
+koin-compose = { module = "io.insert-koin:koin-compose" }
+koin-compose-viewmodel = { module = "io.insert-koin:koin-compose" }
+koin-compose-viewmodel-navigation = { module = "io.insert-koin:koin-compose" }
+androidx-datastore-preferences-core-jvm = { group = "androidx.datastore", name = "datastore-preferences-core-jvm", version.ref = "datastorePreferencesCoreJvm" }
+ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
+ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
+ktor-client-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor" }
+ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
+ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
+ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
+ktor-client-auth = { module = "io.ktor:ktor-client-auth", version.ref = "ktor" }
+
+[bundles]
+koin = ["koin-core", "koin-compose", "koin-compose-viewmodel", "koin-compose-viewmodel-navigation"]
+ktor = [
+    "ktor-client-core",
+    "ktor-client-content-negotiation",
+    "ktor-client-auth",
+    "ktor-client-logging",
+    "ktor-serialization-kotlinx-json",
+]
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
