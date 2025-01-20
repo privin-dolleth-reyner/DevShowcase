@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -48,7 +49,7 @@ fun App() {
             backgroundColor = MaterialTheme.colors.background,
             bottomBar = {
             BottomNavigation(Modifier.offset(y = (-50).dp), backgroundColor = Color.Transparent, elevation = 0.dp){
-                Box(contentAlignment = Alignment.BottomCenter, modifier = Modifier.fillMaxSize()){
+                Box(contentAlignment = Alignment.BottomCenter, modifier = Modifier.fillMaxWidth().align(Alignment.CenterVertically)){
                     ElevatedNavbar(onNavClick = {
                         when(it){
                             BottomNavigation.Home -> navController.navigate(Routes.Home)
@@ -67,7 +68,9 @@ fun App() {
                     startDestination = Routes.Home
                 ){
                     composable<Routes.Home>{
-                        ProjectsScreen()
+                        ProjectsScreen(onClick = {
+                            navController.navigate(Routes.ProjectDetail("ads"))
+                        })
                     }
                     composable<Routes.About> {
                         Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
