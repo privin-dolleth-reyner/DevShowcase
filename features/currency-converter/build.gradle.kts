@@ -6,8 +6,8 @@ import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
-//    alias(libs.plugins.composeMultiplatform)
-//    alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.composeMultiplatform)
+    alias(libs.plugins.composeCompiler)
 }
 
 kotlin {
@@ -24,7 +24,7 @@ kotlin {
         iosSimulatorArm64()
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
-            baseName = "dataCore"
+            baseName = "featuresCurrencyConverter"
             isStatic = true
         }
     }
@@ -33,12 +33,12 @@ kotlin {
 
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
-        moduleName = "dataCore"
+        moduleName = "featuresCurrencyConverter"
         browser {
             val rootDirPath = project.rootDir.path
             val projectDirPath = project.projectDir.path
             commonWebpackConfig {
-                outputFileName = "dataCore.js"
+                outputFileName = "featuresCurrencyConverter.js"
                 devServer = (devServer ?: KotlinWebpackConfig.DevServer()).apply {
                     static = (static ?: mutableListOf()).apply {
                         // Serve sources to debug inside browser
@@ -52,25 +52,15 @@ kotlin {
     }
 
     sourceSets{
-        val desktopMain by getting
-
-        desktopMain.dependencies {
-            api(libs.kotlinx.coroutines.swing)
-        }
-
         commonMain.dependencies {
-            api(libs.cmp.settings)
-            api(libs.kotlinx.coroutines.core)
-        }
-
-        androidMain.dependencies {
-            api(libs.kotlinx.coroutines.android)
+            implementation(projects.ui.core)
+            implementation(projects.data.currencyConverter)
         }
     }
 }
 
 android {
-    namespace = "com.cmp.showcase.data.core"
+    namespace = "com.cmp.showcase.features.currency.converter"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
