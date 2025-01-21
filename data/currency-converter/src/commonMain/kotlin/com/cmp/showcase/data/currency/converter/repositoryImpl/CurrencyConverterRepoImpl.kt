@@ -1,13 +1,12 @@
 package com.cmp.showcase.data.currency.converter.repositoryImpl
 
+import com.cmp.showcase.data.currency.converter.remote.RemoteDataSource
 import com.cpm.showcase.domain.currency.converter.entity.Currency
 import com.cpm.showcase.domain.currency.converter.repository.CurrencyConverterRepo
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.emptyFlow
 
-class CurrencyConverterRepoImpl: CurrencyConverterRepo {
-    override fun getCurrencyCodes(): Flow<Currency> {
-        return emptyFlow()
+class CurrencyConverterRepoImpl(private val remoteDataSource: RemoteDataSource): CurrencyConverterRepo {
+    override suspend fun getCurrencyCodes(): List<Currency> {
+        return remoteDataSource.getSupportedCurrencies()
     }
 
     override suspend fun fetchAndSave(currencyCode: String) {

@@ -54,7 +54,7 @@ kotlin {
     sourceSets{
         commonMain.dependencies {
             implementation(projects.ui.core)
-            implementation(projects.data.currencyConverter)
+            api(projects.data.currencyConverter)
         }
     }
 }

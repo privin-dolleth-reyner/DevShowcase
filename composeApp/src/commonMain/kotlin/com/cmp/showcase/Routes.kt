@@ -15,6 +15,8 @@ sealed interface Routes {
     data object About: Routes
     @Serializable
     data class ProjectDetail(val id: String): Routes
+    @Serializable
+    data object CurrencyConverter: Routes
 }
 
 enum class BottomNavigation(val title: String, val icon: ImageVector) {

@@ -33,8 +33,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
+import com.cmp.showcase.features.currency.converter.CurrencyConverterScreen
 import com.cpm.showcase.features.projects.ProjectsScreen
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import org.koin.compose.KoinContext
 
 
 @Composable
@@ -48,40 +50,56 @@ fun App() {
         Scaffold(
             backgroundColor = MaterialTheme.colors.background,
             bottomBar = {
-            BottomNavigation(Modifier.offset(y = (-50).dp), backgroundColor = Color.Transparent, elevation = 0.dp){
-                Box(contentAlignment = Alignment.BottomCenter, modifier = Modifier.fillMaxWidth().align(Alignment.CenterVertically)){
-                    ElevatedNavbar(onNavClick = {
-                        when(it){
-                            BottomNavigation.Home -> navController.navigate(Routes.Home)
-                            BottomNavigation.About -> navController.navigate(Routes.About)
-                        }
-                    })
+                BottomNavigation(
+                    Modifier.offset(y = (-50).dp),
+                    backgroundColor = Color.Transparent,
+                    elevation = 0.dp
+                ) {
+                    Box(
+                        contentAlignment = Alignment.BottomCenter,
+                        modifier = Modifier.fillMaxWidth().align(Alignment.CenterVertically)
+                    ) {
+                        ElevatedNavbar(onNavClick = {
+                            when (it) {
+                                BottomNavigation.Home -> navController.navigate(Routes.CurrencyConverter)
+                                BottomNavigation.About -> navController.navigate(Routes.About)
+                            }
+                        })
+                    }
                 }
-            }
-        }){
+            }) {
             Text(text = "Showcase App", fontSize = 30.sp, modifier = Modifier.padding(16.dp))
             NavHost(
                 navController = navController,
                 startDestination = Routes.Graph
-            ){
+            ) {
                 navigation<Routes.Graph>(
                     startDestination = Routes.Home
-                ){
-                    composable<Routes.Home>{
+                ) {
+                    composable<Routes.Home> {
                         ProjectsScreen(onClick = {
                             navController.navigate(Routes.ProjectDetail("ads"))
                         })
                     }
                     composable<Routes.About> {
-                        Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
+                        Box(
+                            contentAlignment = Alignment.Center,
+                            modifier = Modifier.fillMaxSize()
+                        ) {
                             Text("About screen ")
                         }
                     }
                     composable<Routes.ProjectDetail> { data ->
                         val args = data.toRoute<Routes.ProjectDetail>()
-                        Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
+                        Box(
+                            contentAlignment = Alignment.Center,
+                            modifier = Modifier.fillMaxSize()
+                        ) {
                             Text("Projects Detail screen ")
                         }
+                    }
+                    composable<Routes.CurrencyConverter> {
+                        CurrencyConverterScreen()
                     }
                 }
             }
@@ -90,10 +108,22 @@ fun App() {
 }
 
 @Composable
-fun ElevatedNavbar(modifier: Modifier = Modifier, onNavClick: (nav: BottomNavigation) -> Unit ){
-    val navList by remember { mutableStateOf(arrayListOf(BottomNavigation.Home, BottomNavigation.About)) }
+fun ElevatedNavbar(modifier: Modifier = Modifier, onNavClick: (nav: BottomNavigation) -> Unit) {
+    val navList by remember {
+        mutableStateOf(
+            arrayListOf(
+                BottomNavigation.Home,
+                BottomNavigation.About
+            )
+        )
+    }
     var selectedNav by remember { mutableStateOf(BottomNavigation.Home) }
-    Surface(modifier.padding(4.dp), shape = RoundedCornerShape(24.dp), color = MaterialTheme.colors.surface, elevation = 2.dp) {
+    Surface(
+        modifier.padding(4.dp),
+        shape = RoundedCornerShape(24.dp),
+        color = MaterialTheme.colors.surface,
+        elevation = 2.dp
+    ) {
         Row {
             navList.forEach {
                 NavBarItem(
@@ -109,14 +139,27 @@ fun ElevatedNavbar(modifier: Modifier = Modifier, onNavClick: (nav: BottomNaviga
 }
 
 @Composable
-fun NavBarItem(nav: BottomNavigation, isSelected: Boolean, modifier: Modifier = Modifier, onClick: (nav: BottomNavigation) -> Unit ){
-    Surface(modifier.clickable { onClick(nav) }, shape = RoundedCornerShape(24.dp), color = if(isSelected) MaterialTheme.colors.primary else MaterialTheme.colors.surface) {
+fun NavBarItem(
+    nav: BottomNavigation,
+    isSelected: Boolean,
+    modifier: Modifier = Modifier,
+    onClick: (nav: BottomNavigation) -> Unit
+) {
+    Surface(
+        modifier.clickable { onClick(nav) },
+        shape = RoundedCornerShape(24.dp),
+        color = if (isSelected) MaterialTheme.colors.primary else MaterialTheme.colors.surface
+    ) {
         Column(
             modifier = modifier.padding(16.dp),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Icon(imageVector = nav.icon, contentDescription = null, tint = if(isSelected) MaterialTheme.colors.onPrimary else MaterialTheme.colors.onSurface)
+            Icon(
+                imageVector = nav.icon,
+                contentDescription = null,
+                tint = if (isSelected) MaterialTheme.colors.onPrimary else MaterialTheme.colors.onSurface
+            )
             Spacer(Modifier.padding(2.dp))
             Text(text = nav.title, style = MaterialTheme.typography.caption)
         }

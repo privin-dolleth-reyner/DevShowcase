@@ -65,6 +65,7 @@ kotlin {
             implementation(projects.ui.core)
             implementation(projects.data.core)
             implementation(projects.features.projects)
+            implementation(projects.features.currencyConverter)
             implementation(libs.navigation.compose)
             api(libs.kotlinx.serializable)
             implementation(libs.bundles.ktor)

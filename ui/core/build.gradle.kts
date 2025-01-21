@@ -67,6 +67,8 @@ kotlin {
 
         androidMain.dependencies {
             implementation(libs.androidx.core.ktx)
+            api(libs.koin.android)
+            api(libs.koin.androidx.compose)
         }
     }
 }

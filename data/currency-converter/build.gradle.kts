@@ -6,6 +6,7 @@ import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.serialization)
 }
 
 kotlin {
@@ -54,16 +55,28 @@ kotlin {
 
         desktopMain.dependencies {
             api(libs.kotlinx.coroutines.swing)
+            implementation(libs.ktor.client.okhttp)
         }
 
         commonMain.dependencies {
-            implementation(projects.domain.currencyConverter)
+            api(projects.domain.currencyConverter)
+            implementation(libs.bundles.ktor)
+            implementation(libs.koin.core)
+
             api(libs.cmp.settings)
             api(libs.kotlinx.coroutines.core)
         }
 
+        nativeMain.dependencies {
+            implementation(libs.ktor.client.darwin)
+        }
+
         androidMain.dependencies {
             api(libs.kotlinx.coroutines.android)
+            implementation(libs.ktor.client.okhttp)
+        }
+        wasmWasiMain.dependencies {
+            implementation(libs.ktor.client.wasm.js)
         }
     }
 }
