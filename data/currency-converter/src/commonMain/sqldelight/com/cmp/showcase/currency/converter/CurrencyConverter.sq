@@ -1,0 +1,33 @@
+CREATE TABLE CurrencyTable(
+    code TEXT NOT NULL PRIMARY KEY ,
+    name TEXT NOT NULL
+);
+
+getAllCurrencies:
+SELECT * FROM CurrencyTable;
+
+insertCurrency:
+INSERT INTO CurrencyTable(name, code)
+VALUES (?, ?);
+
+deleteAllCurrencies:
+DELETE FROM CurrencyTable;
+
+CREATE TABLE ExchangeRateTable (
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    baseCurrencyCode TEXT NOT NULL,
+    targetCurrencyCode TEXT NOT NULL,
+    rate REAL NOT NULL
+);
+
+getExchangeRate:
+SELECT ExchangeRateTable.rate FROM ExchangeRateTable
+WHERE baseCurrencyCode == ?
+AND targetCurrencyCode == ?;
+
+insertExchangeRate:
+INSERT INTO ExchangeRateTable(baseCurrencyCode, targetCurrencyCode, rate)
+VALUES (?,?,?);
+
+deleteAllExchangeRate:
+DELETE FROM ExchangeRateTable;

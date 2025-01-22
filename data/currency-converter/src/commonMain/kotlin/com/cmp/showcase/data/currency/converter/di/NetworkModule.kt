@@ -14,7 +14,7 @@ import io.ktor.client.HttpClient
 
 expect fun getHttpClient(): HttpClient
 
-fun KoinApplication.currencyDataModule() = arrayOf(networkModule)
+fun KoinApplication.currencyDataModule() = arrayOf(networkModule, platformDbModule)
 
 val networkModule = module {
     single {

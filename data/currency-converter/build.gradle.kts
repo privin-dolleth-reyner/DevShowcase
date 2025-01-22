@@ -9,6 +9,7 @@ plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.serialization)
     alias(libs.plugins.buildConfig)
+    alias(libs.plugins.sqlDelight)
 }
 
 val secretKeyProperties by lazy {
@@ -58,13 +59,6 @@ kotlin {
     }
 
     sourceSets{
-        val desktopMain by getting
-
-        desktopMain.dependencies {
-            api(libs.kotlinx.coroutines.swing)
-            implementation(libs.ktor.client.okhttp)
-        }
-
         commonMain.dependencies {
             api(projects.domain.currencyConverter)
             implementation(libs.bundles.ktor)
@@ -76,14 +70,14 @@ kotlin {
 
         nativeMain.dependencies {
             implementation(libs.ktor.client.darwin)
+            implementation(libs.sqldelight.native)
         }
 
         androidMain.dependencies {
             api(libs.kotlinx.coroutines.android)
             implementation(libs.ktor.client.okhttp)
-        }
-        wasmWasiMain.dependencies {
-            implementation(libs.ktor.client.wasm.js)
+
+            implementation(libs.sqldelight.android)
         }
     }
 }
@@ -124,4 +118,12 @@ buildConfig {
         "APP_NAME",
         "\"${rootProject.name}\""
     )
+}
+
+sqldelight{
+    databases{
+        create("CurrencyConverter"){
+            packageName.set("com.cmp.showcase.currency.converter")
+        }
+    }
 }
