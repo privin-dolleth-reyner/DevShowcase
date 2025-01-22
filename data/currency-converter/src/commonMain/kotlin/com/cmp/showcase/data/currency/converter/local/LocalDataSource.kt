@@ -1,22 +1,27 @@
 package com.cmp.showcase.data.currency.converter.local
 
-import app.cash.sqldelight.db.SqlDriver
 import com.cmp.showcase.currency.converter.CurrencyConverter
 import com.cpm.showcase.domain.currency.converter.entity.Currency
 
-
-interface DatabaseFactory {
-    fun createSqlDriver(): SqlDriver
-}
-
-class LocalDatabase(databaseFactory: DatabaseFactory) {
+class LocalDataSource(databaseFactory: DatabaseFactory) {
 
     private val database = CurrencyConverter(databaseFactory.createSqlDriver())
 
     private val query = database.currencyConverterQueries
 
     suspend fun getAllCurrencies(): List<Currency> {
+        println("Get all cached currencies")
         return query.getAllCurrencies().executeAsList().map { Currency(it.name, it.code) }
+    }
+
+    suspend fun insertAllCurrencies(list: List<Currency>){
+        println("Insert all currencies")
+        query.transaction {
+            list.forEach {
+                query.insertCurrency(name = it.name, code =  it.code)
+            }
+        }
+
     }
 
     suspend fun insertCurrency(currency: Currency){
@@ -27,11 +32,22 @@ class LocalDatabase(databaseFactory: DatabaseFactory) {
         query.deleteAllCurrencies()
     }
 
+    suspend fun insertAllExchangeRates(baseCurrencyCode: String, map: Map<String,Double>){
+        println("Insert all exchange rates")
+        query.transaction {
+            map.forEach {
+                query.insertExchangeRate(baseCurrencyCode, it.key, it.value)
+            }
+        }
+
+    }
+
     suspend fun insertExchangeRate(baseCurrencyCode: String, targetCurrencyCode: String, rate: Double){
         query.insertExchangeRate(baseCurrencyCode, targetCurrencyCode, rate)
     }
 
     suspend fun getExchangeRate(baseCurrencyCode: String, targetCurrencyCode: String): Double? {
+        println("Get cached exchange rates")
         return query.getExchangeRate(baseCurrencyCode, targetCurrencyCode).executeAsOneOrNull()
     }
 }
