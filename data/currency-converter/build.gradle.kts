@@ -2,11 +2,18 @@ import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
+import java.util.Properties
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.serialization)
+    alias(libs.plugins.buildConfig)
+}
+
+val secretKeyProperties by lazy {
+    val secretKeyPropertiesFile = rootProject.file("secrets.properties")
+    Properties().apply { secretKeyPropertiesFile.inputStream().use { secret -> load(secret) } }
 }
 
 kotlin {
@@ -61,7 +68,7 @@ kotlin {
         commonMain.dependencies {
             api(projects.domain.currencyConverter)
             implementation(libs.bundles.ktor)
-            implementation(libs.koin.core)
+            api(libs.koin.core)
 
             api(libs.cmp.settings)
             api(libs.kotlinx.coroutines.core)
@@ -102,4 +109,19 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+}
+
+buildConfig {
+    packageName = "com.cmp.showcase.data.currency.converter"
+    useKotlinOutput { internalVisibility = true }
+    buildConfigField(
+        "String",
+        "API_KEY",
+        "${secretKeyProperties["API_KEY"]}"
+    )
+    buildConfigField(
+        "String",
+        "APP_NAME",
+        "\"${rootProject.name}\""
+    )
 }

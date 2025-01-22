@@ -7,7 +7,7 @@ import io.ktor.client.request.get
 class RemoteDataSource(private val client: HttpClient) {
 
     suspend fun getSupportedCurrencies(): List<Currency> {
-        val response = client.get("/v6/b0f1451d0d0afef970954a1e/latest/USD")
+        val response = client.get("/v6/latest/USD")
         when (val status = response.status.value){
             in 200..299 ->{
                 println("Success")

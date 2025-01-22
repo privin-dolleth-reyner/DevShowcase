@@ -23,6 +23,7 @@ serialization = "1.8.0"
 koin = "4.0.1"
 datastorePreferencesCoreJvm = "1.1.2"
 ktor = "3.0.3"
+buildConfig = "5.5.1"
 
 
 [libraries]
@@ -79,3 +80,4 @@ composeMultiplatform = { id = "org.jetbrains.compose", version.ref = "compose-mu
 composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "serialization-plugin"}
+buildConfig = { id = "com.github.gmazzo.buildconfig", version.ref = "buildConfig" }
