@@ -9,6 +9,7 @@ import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
 import com.cmp.showcase.data.currency.converter.usecase.GetCodes
+import com.cmp.showcase.data.currency.converter.usecase.GetConversionAmount
 import io.ktor.client.HttpClient
 
 expect fun getHttpClient(): HttpClient
@@ -22,4 +23,5 @@ val networkModule = module {
     singleOf(::RemoteDataSource)
     singleOf(::CurrencyConverterRepoImpl).bind<CurrencyConverterRepo>()
     singleOf(::GetCodes)
+    singleOf(::GetConversionAmount)
 }

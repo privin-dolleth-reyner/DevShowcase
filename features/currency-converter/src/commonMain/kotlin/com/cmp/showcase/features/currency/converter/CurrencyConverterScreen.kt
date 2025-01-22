@@ -34,10 +34,12 @@ fun CurrencyConverterScreen(modifier: Modifier = Modifier, viewModel: CurrencyCo
             is CurrencyUiState.Error -> {
                 Text(s.errorMessage, style = MaterialTheme.typography.h5, textAlign = TextAlign.Center, modifier = Modifier, color = MaterialTheme.colors.error)
             }
-            is CurrencyUiState.Success ->{
+            is CurrencyUiState.SupportedCurrencies ->{
                 Text("Success", style = MaterialTheme.typography.h5, textAlign = TextAlign.Center, modifier = Modifier, color = MaterialTheme.colors.primary)
             }
-
+            is CurrencyUiState.ConversionAmount -> {
+                Text("${s.amount}", style = MaterialTheme.typography.h5, textAlign = TextAlign.Center, modifier = Modifier, color = MaterialTheme.colors.primary)
+            }
             is CurrencyUiState.Idle -> {
                 Column(modifier = Modifier.fillMaxWidth()) {
                     Card(modifier = Modifier.fillMaxWidth().height(200.dp).padding(16.dp), shape = RoundedCornerShape(24.dp), contentColor = MaterialTheme.colors.onSurface, backgroundColor = MaterialTheme.colors.primarySurface) {
