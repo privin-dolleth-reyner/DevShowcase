@@ -20,7 +20,22 @@ class CurrencyConverterViewModel(
         _state.value = CurrencyUiState.Loading
         viewModelScope.launch {
             try {
-                val codes = getConversionAmount("SGD","INR", 2.0)
+                val codes = getCodes()
+                _state.value = CurrencyUiState.SupportedCurrencies(codes)
+                println("Success VM")
+            }catch (e: Exception){
+                println(e.printStackTrace())
+                _state.value = CurrencyUiState.Error(e.message ?: "Something went wrong!")
+            }
+
+        }
+    }
+
+    fun convert(baseCurrencyCode: String, targetCurrencyCode: String, amount: Double){
+        _state.value = CurrencyUiState.Loading
+        viewModelScope.launch {
+            try {
+                val codes = getConversionAmount(baseCurrencyCode,targetCurrencyCode, amount)
                 _state.value = CurrencyUiState.ConversionAmount(codes)
                 println("Success VM")
             }catch (e: Exception){

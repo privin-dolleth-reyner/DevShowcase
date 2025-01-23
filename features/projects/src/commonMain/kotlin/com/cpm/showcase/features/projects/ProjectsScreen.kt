@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun ProjectsScreen(onClick:(Int) -> Unit){
-    Box(contentAlignment = Alignment.TopStart, modifier = Modifier.fillMaxSize().offset(y = 50.dp)) {
+    Box(contentAlignment = Alignment.TopStart, modifier = Modifier.fillMaxSize()) {
         Column(modifier = Modifier.fillMaxSize()) {
             Card(modifier = Modifier.fillMaxWidth().height(200.dp).padding(16.dp), shape = RoundedCornerShape(24.dp), contentColor = MaterialTheme.colors.onSurface, backgroundColor = MaterialTheme.colors.primarySurface) {
                 Button(onClick = {

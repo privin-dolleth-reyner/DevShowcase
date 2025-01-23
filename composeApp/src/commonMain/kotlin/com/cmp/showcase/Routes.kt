@@ -12,11 +12,25 @@ sealed interface Routes {
     @Serializable
     data object Home: Routes
     @Serializable
+    data object Currency: Routes
+}
+
+sealed interface HomeScreenRoutes {
+    @Serializable
+    data object Graph: Routes
+    @Serializable
+    data object Projects: Routes
+    @Serializable
     data object About: Routes
     @Serializable
     data class ProjectDetail(val id: String): Routes
+}
+
+sealed interface CurrencyConverterRoutes: Routes {
     @Serializable
-    data object CurrencyConverter: Routes
+    data object Graph: CurrencyConverterRoutes
+    @Serializable
+    data object Home: CurrencyConverterRoutes
 }
 
 enum class BottomNavigation(val title: String, val icon: ImageVector) {
