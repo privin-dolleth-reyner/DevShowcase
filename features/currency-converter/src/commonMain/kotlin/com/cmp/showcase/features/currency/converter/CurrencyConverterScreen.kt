@@ -2,7 +2,6 @@ package com.cmp.showcase.features.currency.converter
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Arrangement
@@ -137,21 +136,21 @@ fun InputButtons(items: List<Item>, modifier: Modifier = Modifier, onClick: (Ite
             var i = 0
             repeat(3){
                 items(3){
-                    val item = items[i++]
+                    val item = items[i++ % 15]
                     InputButton(item, onClick, Modifier.fillMaxWidth().height(height).padding(4.dp))
                 }
                 item {
-                    InputButton(items[i++], onClick, Modifier.fillMaxWidth().height(height).padding(4.dp))
+                    InputButton(items[i++ % 15], onClick, Modifier.fillMaxWidth().height(height).padding(4.dp))
                 }
             }
             item(span = { GridItemSpan(2) }) {
-                InputButton(items[i++], onClick, Modifier.width(width).height(height).padding(4.dp))
+                InputButton(items[i++ % 15], onClick, Modifier.width(width).height(height).padding(4.dp))
             }
             item(span = { GridItemSpan(1) }) {
-                InputButton(items[i++], onClick, Modifier.width(width).height(height).padding(4.dp))
+                InputButton(items[i++ % 15], onClick, Modifier.width(width).height(height).padding(4.dp))
             }
             item(span = { GridItemSpan(1) }) {
-                InputButton(items[i++], onClick, Modifier.width(width).height(height).padding(4.dp))
+                InputButton(items[i++ % 15], onClick, Modifier.width(width).height(height).padding(4.dp))
             }
         }
     }
