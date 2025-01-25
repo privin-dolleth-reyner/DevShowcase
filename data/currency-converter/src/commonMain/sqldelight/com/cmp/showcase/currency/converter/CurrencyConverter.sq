@@ -7,17 +7,17 @@ getAllCurrencies:
 SELECT * FROM CurrencyTable;
 
 insertCurrency:
-INSERT INTO CurrencyTable(name, code)
+INSERT OR IGNORE INTO CurrencyTable(name, code)
 VALUES (?, ?);
 
 deleteAllCurrencies:
 DELETE FROM CurrencyTable;
 
 CREATE TABLE ExchangeRateTable (
-    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     baseCurrencyCode TEXT NOT NULL,
     targetCurrencyCode TEXT NOT NULL,
-    rate REAL NOT NULL
+    rate REAL NOT NULL,
+    PRIMARY KEY (baseCurrencyCode, targetCurrencyCode)
 );
 
 getExchangeRate:
@@ -26,7 +26,7 @@ WHERE baseCurrencyCode == ?
 AND targetCurrencyCode == ?;
 
 insertExchangeRate:
-INSERT INTO ExchangeRateTable(baseCurrencyCode, targetCurrencyCode, rate)
+INSERT OR IGNORE INTO ExchangeRateTable(baseCurrencyCode, targetCurrencyCode, rate)
 VALUES (?,?,?);
 
 deleteAllExchangeRate:

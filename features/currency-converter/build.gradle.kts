@@ -30,6 +30,7 @@ kotlin {
     sourceSets{
         commonMain.dependencies {
             implementation(projects.ui.core)
+            api(compose.components.resources)
             api(projects.data.currencyConverter)
         }
     }
@@ -56,4 +57,8 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+}
+
+compose.resources {
+    generateResClass = always
 }

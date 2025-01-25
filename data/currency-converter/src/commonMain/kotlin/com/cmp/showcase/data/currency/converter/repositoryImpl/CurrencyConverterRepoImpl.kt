@@ -16,7 +16,7 @@ class CurrencyConverterRepoImpl(
         }
         return remoteDataSource.getSupportedCurrencies().supported_codes
             .map {
-                Currency(it[0], it[1])
+                Currency(name = it[1], code = it[0])
             }.toList().also {
                 localDataSource.insertAllCurrencies(it)
             }

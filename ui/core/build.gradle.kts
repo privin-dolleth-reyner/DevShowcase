@@ -61,6 +61,7 @@ kotlin {
             api(compose.components.uiToolingPreview)
             api(libs.androidx.lifecycle.viewmodel)
             api(libs.androidx.lifecycle.runtime.compose)
+            api(libs.kotlinx.coroutines.core)
             api(project.dependencies.platform(libs.koin.bom))
             api(libs.bundles.koin)
         }

@@ -31,6 +31,8 @@ sealed interface CurrencyConverterRoutes: Routes {
     data object Graph: CurrencyConverterRoutes
     @Serializable
     data object Home: CurrencyConverterRoutes
+    @Serializable
+    data class SelectCurrency(val isBaseCurrency: Boolean): CurrencyConverterRoutes
 }
 
 enum class BottomNavigation(val title: String, val icon: ImageVector) {

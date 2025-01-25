@@ -42,6 +42,7 @@ import com.cpm.showcase.features.projects.ProjectsScreen
 fun HomeScreen(navigationController: NavController, modifier: Modifier = Modifier){
     val navController = rememberNavController()
     Scaffold(
+        modifier = modifier.statusBarsPadding(),
         topBar = {
             TopAppBar(title = {
                 Text(text = "Showcase App", fontSize = 30.sp, modifier = Modifier.fillMaxSize().padding(8.dp), textAlign = TextAlign.Start)
