@@ -64,7 +64,7 @@ fun CurrencyConverterScreen(
             val state by viewModel.state.collectAsStateWithLifecycle()
 
             Column(
-                modifier = Modifier.fillMaxSize().padding(8.dp),
+                modifier = Modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.SpaceBetween
             ) {
                 Title(onBackClick = onBackClick)

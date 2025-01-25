@@ -1,5 +1,6 @@
 package com.cmp.showcase
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -14,12 +15,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.BottomNavigation
+import androidx.compose.material.Divider
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -30,7 +31,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -39,16 +39,10 @@ import androidx.navigation.compose.rememberNavController
 import com.cpm.showcase.features.projects.ProjectsScreen
 
 @Composable
-fun HomeScreen(navigationController: NavController, modifier: Modifier = Modifier){
+fun HomeScreen(navigationController: NavController, modifier: Modifier = Modifier) {
     val navController = rememberNavController()
     Scaffold(
         modifier = modifier.statusBarsPadding(),
-        topBar = {
-            TopAppBar(title = {
-                Text(text = "Showcase App", fontSize = 30.sp, modifier = Modifier.fillMaxSize().padding(8.dp), textAlign = TextAlign.Start)
-            },
-                modifier = Modifier.height(55.dp).statusBarsPadding())
-        },
         backgroundColor = MaterialTheme.colors.background,
         bottomBar = {
             BottomNavigation(
@@ -70,6 +64,7 @@ fun HomeScreen(navigationController: NavController, modifier: Modifier = Modifie
             }
         }) {
         Column {
+            Title()
             NavHost(
                 navController = navController,
                 startDestination = HomeScreenRoutes.Graph
@@ -156,3 +151,25 @@ fun NavBarItem(
     }
 }
 
+
+@Composable
+private fun Title(modifier: Modifier = Modifier) {
+    Column (modifier = modifier){
+        Row(
+            modifier = Modifier.fillMaxWidth().height(80.dp)
+                .background(MaterialTheme.colors.surface),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                "Showcase App",
+                textAlign = TextAlign.Start,
+                style = MaterialTheme.typography.h5,
+                color = MaterialTheme.colors.onSurface,
+                modifier = Modifier.fillMaxWidth().padding(start = 16.dp)
+            )
+
+        }
+        Divider(Modifier.fillMaxWidth(), color = MaterialTheme.colors.onSurface.copy(alpha = 0.5f))
+    }
+
+}
