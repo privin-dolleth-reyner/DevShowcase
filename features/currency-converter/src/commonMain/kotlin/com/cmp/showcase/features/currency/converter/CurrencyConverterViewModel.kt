@@ -86,6 +86,9 @@ class CurrencyConverterViewModel(
                 _state.value = _state.value.copy(baseAmount = _state.value.baseAmount.copy(title = _state.value.baseAmount.title + "."))
             }
             InputType.Number -> {
+                if (item.title == Input.DOUBLE_ZERO && _state.value.baseAmount.title.isEmpty()){
+                    return
+                }
                 val currentValue = _state.value.baseAmount.title
                 val newValue = currentValue + item.title
                 _state.value = _state.value.copy(baseAmount = _state.value.baseAmount.copy(title = newValue))
@@ -93,7 +96,7 @@ class CurrencyConverterViewModel(
 
             }
             InputType.Clear -> {
-                _state.value = _state.value.copy(baseAmount = _state.value.baseAmount.copy(title = ""), targetAmount = _state.value.targetAmount.copy(title = ""))
+                clear()
             }
             InputType.Swap ->{
                 onSwapCurrency()
@@ -108,12 +111,19 @@ class CurrencyConverterViewModel(
         }
     }
 
+    private fun clear() {
+        _state.value = _state.value.copy(
+            baseAmount = _state.value.baseAmount.copy(title = ""),
+            targetAmount = _state.value.targetAmount.copy(title = "")
+        )
+    }
+
     private fun convertAndUpdateView(){
         try {
             convert(_state.value.baseCurrencyCode.title, _state.value.targetCurrencyCode.title, _state.value.baseAmount.title.toDouble())
         }catch (e : NumberFormatException){
             println("Invalid number format")
-            _state.value = _state.value.copy(baseAmount = _state.value.baseAmount.copy(title = ""))
+           clear()
         }
     }
 
