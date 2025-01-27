@@ -39,7 +39,7 @@ kotlin {
         }
         commonMain.dependencies {
             implementation(projects.core.ui)
-            implementation(projects.data.core)
+            implementation(projects.core.data)
             implementation(projects.features.projects)
             implementation(projects.features.currencyConverter)
             implementation(libs.navigation.compose)
