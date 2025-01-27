@@ -30,3 +30,9 @@ dependencyResolutionManagement {
 
 include(":composeApp")
 include(":ui:core")
+include(":data:core")
+include(":data:currency-converter")
+include(":features")
+include(":features:projects")
+include(":features:currency-converter")
+include(":domain:currency-converter")

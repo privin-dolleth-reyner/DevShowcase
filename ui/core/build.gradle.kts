@@ -53,18 +53,23 @@ kotlin {
 
     sourceSets{
         commonMain.dependencies {
-            implementation(compose.runtime)
-            implementation(compose.foundation)
-            implementation(compose.material)
-            implementation(compose.ui)
-            implementation(compose.components.resources)
-            implementation(compose.components.uiToolingPreview)
-            implementation(libs.androidx.lifecycle.viewmodel)
-            implementation(libs.androidx.lifecycle.runtime.compose)
+            api(compose.runtime)
+            api(compose.foundation)
+            api(compose.material)
+            api(compose.ui)
+            api(compose.components.resources)
+            api(compose.components.uiToolingPreview)
+            api(libs.androidx.lifecycle.viewmodel)
+            api(libs.androidx.lifecycle.runtime.compose)
+            api(libs.kotlinx.coroutines.core)
+            api(project.dependencies.platform(libs.koin.bom))
+            api(libs.bundles.koin)
         }
 
         androidMain.dependencies {
             implementation(libs.androidx.core.ktx)
+            api(libs.koin.android)
+            api(libs.koin.androidx.compose)
         }
     }
 }
