@@ -53,7 +53,7 @@ kotlin {
 
     sourceSets{
         commonMain.dependencies {
-            implementation(projects.ui.core)
+            implementation(projects.core.ui)
         }
     }
 }

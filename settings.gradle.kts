@@ -29,7 +29,7 @@ dependencyResolutionManagement {
 }
 
 include(":composeApp")
-include(":ui:core")
+include(":core:ui")
 include(":data:core")
 include(":data:currency-converter")
 include(":features")

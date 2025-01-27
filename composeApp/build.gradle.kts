@@ -38,7 +38,7 @@ kotlin {
             implementation(libs.ktor.client.okhttp)
         }
         commonMain.dependencies {
-            implementation(projects.ui.core)
+            implementation(projects.core.ui)
             implementation(projects.data.core)
             implementation(projects.features.projects)
             implementation(projects.features.currencyConverter)

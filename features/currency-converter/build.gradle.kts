@@ -29,7 +29,7 @@ kotlin {
 
     sourceSets{
         commonMain.dependencies {
-            implementation(projects.ui.core)
+            implementation(projects.core.ui)
             api(compose.components.resources)
             api(projects.data.currencyConverter)
         }
