@@ -1,6 +1,7 @@
 package com.cmp.showcase.data.currency.converter.local
 
 import com.cmp.showcase.currency.converter.CurrencyConverter
+import com.cmp.showcase.currency.converter.ExchangeRateTable
 import com.cpm.showcase.domain.currency.converter.entity.Currency
 
 class LocalDataSource(databaseFactory: DatabaseFactory) {
@@ -32,21 +33,21 @@ class LocalDataSource(databaseFactory: DatabaseFactory) {
         query.deleteAllCurrencies()
     }
 
-    suspend fun insertAllExchangeRates(baseCurrencyCode: String, map: Map<String,Double>){
+    suspend fun insertAllExchangeRates(baseCurrencyCode: String, map: Map<String,Double>, lastUpdate: Long, nextUpdate: Long){
         println("Insert all exchange rates")
         query.transaction {
             map.forEach {
-                query.insertExchangeRate(baseCurrencyCode, it.key, it.value)
+                query.insertExchangeRate(baseCurrencyCode, it.key, it.value, lastUpdate, nextUpdate)
             }
         }
 
     }
 
-    suspend fun insertExchangeRate(baseCurrencyCode: String, targetCurrencyCode: String, rate: Double){
-        query.insertExchangeRate(baseCurrencyCode, targetCurrencyCode, rate)
+    suspend fun insertExchangeRate(baseCurrencyCode: String, targetCurrencyCode: String, rate: Double, lastUpdate: Long, nextUpdate: Long){
+        query.insertExchangeRate(baseCurrencyCode, targetCurrencyCode, rate, lastUpdate, nextUpdate)
     }
 
-    suspend fun getExchangeRate(baseCurrencyCode: String, targetCurrencyCode: String): Double? {
+    suspend fun getExchangeRate(baseCurrencyCode: String, targetCurrencyCode: String): ExchangeRateTable? {
         println("Get cached exchange rates")
         return query.getExchangeRate(baseCurrencyCode, targetCurrencyCode).executeAsOneOrNull()
     }

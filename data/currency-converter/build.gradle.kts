@@ -37,6 +37,7 @@ kotlin {
     sourceSets{
         commonMain.dependencies {
             api(projects.domain.currencyConverter)
+            api(libs.kotlinx.datetime)
             implementation(libs.bundles.ktor)
             api(libs.koin.core)
 

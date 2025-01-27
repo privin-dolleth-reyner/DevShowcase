@@ -17,17 +17,19 @@ CREATE TABLE ExchangeRateTable (
     baseCurrencyCode TEXT NOT NULL,
     targetCurrencyCode TEXT NOT NULL,
     rate REAL NOT NULL,
+    lastUpdate INTEGER NOT NULL,
+    nextUpdate INTEGER NOT NULL,
     PRIMARY KEY (baseCurrencyCode, targetCurrencyCode)
 );
 
 getExchangeRate:
-SELECT ExchangeRateTable.rate FROM ExchangeRateTable
+SELECT * FROM ExchangeRateTable
 WHERE baseCurrencyCode == ?
 AND targetCurrencyCode == ?;
 
 insertExchangeRate:
-INSERT OR IGNORE INTO ExchangeRateTable(baseCurrencyCode, targetCurrencyCode, rate)
-VALUES (?,?,?);
+INSERT OR IGNORE INTO ExchangeRateTable(baseCurrencyCode, targetCurrencyCode, rate, lastUpdate, nextUpdate)
+VALUES (?,?,?, ?,?);
 
 deleteAllExchangeRate:
 DELETE FROM ExchangeRateTable;
