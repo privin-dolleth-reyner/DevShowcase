@@ -1,6 +1,5 @@
-package com.cmp.showcase
+package com.cmp.showcase.ui.core
 
-import ProfileScreen
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -31,16 +30,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.navigation
-import androidx.navigation.compose.rememberNavController
-import com.cpm.showcase.features.projects.ProjectsScreen
 
 @Composable
-fun HomeScreen(navigationController: NavController, modifier: Modifier = Modifier) {
-    val navController = rememberNavController()
+fun HomeScreen(container: @Composable ()-> Unit, modifier: Modifier = Modifier, onBottomNavClick: (nav: BottomNavigation) -> Unit) {
     Scaffold(
         modifier = modifier.statusBarsPadding(),
         backgroundColor = MaterialTheme.colors.background,
@@ -56,8 +48,8 @@ fun HomeScreen(navigationController: NavController, modifier: Modifier = Modifie
                 ) {
                     ElevatedNavbar(onNavClick = {
                         when (it) {
-                            BottomNavigation.Home -> navController.navigate(HomeScreenRoutes.Projects)
-                            BottomNavigation.About -> navController.navigate(HomeScreenRoutes.About)
+                            BottomNavigation.Home -> onBottomNavClick(BottomNavigation.Home)
+                            BottomNavigation.About -> onBottomNavClick(BottomNavigation.About)
                         }
                     })
                 }
@@ -65,29 +57,7 @@ fun HomeScreen(navigationController: NavController, modifier: Modifier = Modifie
         }) {
         Column {
             Title()
-            NavHost(
-                navController = navController,
-                startDestination = HomeScreenRoutes.Graph
-            ) {
-                navigation<HomeScreenRoutes.Graph>(
-                    startDestination = HomeScreenRoutes.Projects
-                ) {
-                    composable<HomeScreenRoutes.Projects> {
-                        ProjectsScreen(onClick = {
-                            navigationController.navigate(CurrencyConverterRoutes.Graph)
-                        })
-                    }
-                    composable<HomeScreenRoutes.About> {
-                        ProfileScreen()
-//                        Box(
-//                            contentAlignment = Alignment.Center,
-//                            modifier = Modifier.fillMaxSize()
-//                        ) {
-//                            Text("About screen ", color = MaterialTheme.colors.onSurface)
-//                        }
-                    }
-                }
-            }
+            container()
         }
     }
 }

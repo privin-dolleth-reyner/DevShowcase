@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.serialization)
 }
 
 kotlin {
@@ -38,6 +39,7 @@ kotlin {
             api(libs.androidx.lifecycle.viewmodel)
             api(libs.androidx.lifecycle.runtime.compose)
             api(libs.kotlinx.coroutines.core)
+            api(libs.kotlinx.serializable)
             api(project.dependencies.platform(libs.koin.bom))
             api(libs.bundles.koin)
         }
