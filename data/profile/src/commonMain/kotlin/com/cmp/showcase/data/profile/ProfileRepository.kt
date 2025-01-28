@@ -13,7 +13,7 @@ interface ProfileRepository {
     suspend fun getProjects(): List<Project>
 }
 
-class ProfileRepositoryImpl: ProfileRepository{
+class ProfileRepositoryImpl : ProfileRepository {
     private val firestore = Firebase.firestore
 
     private val profile = firestore.collection("Profile").document("profile")
@@ -22,7 +22,7 @@ class ProfileRepositoryImpl: ProfileRepository{
     private val projects = profile.collection("Projects")
 
     override suspend fun getProfile(): Profile {
-        if(ProfileLocalDataCache.profile != null) return ProfileLocalDataCache.profile!!
+        if (ProfileLocalDataCache.profile != null) return ProfileLocalDataCache.profile!!
 
         return profile.get().data<Profile>().also {
             ProfileLocalDataCache.profile = it
@@ -30,27 +30,33 @@ class ProfileRepositoryImpl: ProfileRepository{
     }
 
     override suspend fun getExperiences(): List<Experience> {
-        if(ProfileLocalDataCache.experiences.isNotEmpty()) return ProfileLocalDataCache.experiences
+        if (ProfileLocalDataCache.experiences.isNotEmpty()) return ProfileLocalDataCache.experiences
 
-        return experience.get().documents.map<DocumentSnapshot, Experience> { it.data() }.also {
-            ProfileLocalDataCache.experiences = it
-        }
+        return experience.get().documents.map<DocumentSnapshot, Experience> { it.data() }
+            .sortedBy { it.displayPriority }
+            .also {
+                ProfileLocalDataCache.experiences = it
+            }
     }
 
     override suspend fun getEducations(): List<Education> {
-        if(ProfileLocalDataCache.education.isNotEmpty()) return ProfileLocalDataCache.education
+        if (ProfileLocalDataCache.education.isNotEmpty()) return ProfileLocalDataCache.education
 
-        return education.get().documents.map<DocumentSnapshot, Education> { it.data() }.also {
-            ProfileLocalDataCache.education = it
-        }
+        return education.get().documents.map<DocumentSnapshot, Education> { it.data() }
+            .sortedBy { it.displayPriority }
+            .also {
+                ProfileLocalDataCache.education = it
+            }
     }
 
     override suspend fun getProjects(): List<Project> {
-        if(ProfileLocalDataCache.projects.isNotEmpty()) return ProfileLocalDataCache.projects
+        if (ProfileLocalDataCache.projects.isNotEmpty()) return ProfileLocalDataCache.projects
 
-        return projects.get().documents.map<DocumentSnapshot, Project> { it.data() }.also {
-            ProfileLocalDataCache.projects = it
-        }
+        return projects.get().documents.map<DocumentSnapshot, Project> { it.data() }
+            .sortedBy { it.displayPriority }
+            .also {
+                ProfileLocalDataCache.projects = it
+            }
     }
 
 }
@@ -66,13 +72,14 @@ data class Profile(
     val emailAddress: String,
     val linkedInUrl: String,
     val githubUrl: String
-){
+) {
     fun getName() = "$firstName $lastName"
 }
 
 
 @Serializable
 data class Experience(
+    val displayPriority: Int,
     val designation: String,
     val company: String,
     val location: String,
@@ -82,6 +89,7 @@ data class Experience(
 
 @Serializable
 data class Education(
+    val displayPriority: Int,
     val degree: String,
     val institution: String,
     val location: String,
@@ -90,6 +98,7 @@ data class Education(
 
 @Serializable
 data class Project(
+    val displayPriority: Int,
     val title: String,
     val description: String,
     val link: String
