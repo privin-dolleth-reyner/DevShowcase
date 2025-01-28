@@ -24,6 +24,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -73,7 +74,7 @@ fun ElevatedNavbar(modifier: Modifier = Modifier, onNavClick: (nav: BottomNaviga
             )
         )
     }
-    var selectedNav by remember { mutableStateOf(BottomNavigation.Home) }
+    var selectedNav by rememberSaveable { mutableStateOf(BottomNavigation.Home) }
     Surface(
         modifier.padding(4.dp),
         shape = RoundedCornerShape(24.dp),
@@ -132,7 +133,7 @@ private fun Title(modifier: Modifier = Modifier) {
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                "Showcase App",
+                "Compose Showcase",
                 textAlign = TextAlign.Start,
                 style = MaterialTheme.typography.h5,
                 color = MaterialTheme.colors.onSurface,

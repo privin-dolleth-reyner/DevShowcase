@@ -11,6 +11,8 @@ import com.cmp.showcase.features.currency.converter.CurrencyConverterRoutes
 import com.cmp.showcase.features.currency.converter.CurrencyConverterScreen
 import com.cmp.showcase.features.currency.converter.CurrencyConverterViewModel
 import com.cmp.showcase.features.currency.converter.SelectCurrencyScreen
+import com.cmp.showcase.features.profile.ProfileScreenRoutes
+import com.cmp.showcase.ui.core.AboutScreen
 import com.cmp.showcase.ui.core.BottomNavigation
 import com.cmp.showcase.ui.core.HomeScreen
 import com.cmp.showcase.ui.core.HomeScreenRoutes
@@ -56,7 +58,9 @@ fun App() {
                                     })
                                 }
                                 composable<HomeScreenRoutes.About> {
-                                    ProfileScreen()
+                                    AboutScreen(onAboutDeveloperClick = {
+                                        navController.navigate(ProfileScreenRoutes.Graph)
+                                    })
                                 }
                             }
                         }
@@ -89,6 +93,16 @@ fun App() {
                         onSelect = {
                             navController.navigateUp()
                         })
+                }
+            }
+
+            navigation<ProfileScreenRoutes.Graph>(
+                startDestination = ProfileScreenRoutes.Home
+            ) {
+                composable<ProfileScreenRoutes.Home> {
+                    ProfileScreen(onBackClick = {
+                        navController.popBackStack()
+                    })
                 }
             }
         }

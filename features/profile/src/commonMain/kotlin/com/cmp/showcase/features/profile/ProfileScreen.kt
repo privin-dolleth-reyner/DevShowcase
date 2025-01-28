@@ -19,9 +19,12 @@ import androidx.compose.material.Chip
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Place
 import androidx.compose.runtime.Composable
@@ -41,28 +44,34 @@ import com.cmp.showcase.features.profile.UiState
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
-fun ProfileScreen(viewmodel: ProfileViewmodel = koinViewModel()) {
+fun ProfileScreen(viewmodel: ProfileViewmodel = koinViewModel(), onBackClick: () -> Unit) {
     val state by viewmodel.state.collectAsState()
 
-    when(val uiState = state.uiState){
-        is UiState.Error -> {
-            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center){
-                Text(uiState.msg, style = MaterialTheme.typography.subtitle1, color = MaterialTheme.colors.error)
+    Surface(Modifier.padding(top = 16.dp)) {
+        Column {
+            IconButton(onClick = onBackClick, modifier = Modifier.padding(top = 16.dp).height(60.dp).align(Alignment.Start)){
+                Icon(imageVector = Icons.AutoMirrored.Filled.ArrowBack, contentDescription = null, tint = MaterialTheme.colors.onSurface)
+            }
+
+            when(val uiState = state.uiState){
+                is UiState.Error -> {
+                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center){
+                        Text(uiState.msg, style = MaterialTheme.typography.subtitle1, color = MaterialTheme.colors.error)
+                    }
+                }
+                UiState.Loading -> {
+                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center){
+                        CircularProgressIndicator()
+                    }
+                }
+                UiState.Success -> Profile(state, onBackClick = onBackClick)
             }
         }
-        UiState.Loading -> {
-            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center){
-                CircularProgressIndicator()
-            }
-        }
-        UiState.Success -> Profile(state)
     }
-
-
 }
 
 @Composable
-fun Profile(state: ProfileState) {
+fun Profile(state: ProfileState, onBackClick: () -> Unit) {
     val scrollState = rememberScrollState()
     Column(
         modifier = Modifier
@@ -71,7 +80,7 @@ fun Profile(state: ProfileState) {
             .padding(16.dp)
     ) {
         state.profile?.let {
-            ProfileHeader(it)
+            ProfileHeader(it,onBackClick)
         }
 
         Spacer(modifier = Modifier.height(24.dp))
@@ -129,14 +138,17 @@ fun Profile(state: ProfileState) {
 }
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-private fun ProfileHeader(profile: Profile) {
+private fun ProfileHeader(profile: Profile, onBackClick: ()-> Unit) {
     Column(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+
+        Spacer(modifier = Modifier.height(16.dp))
+
         Text(
             text = profile.getName(),
-            style = MaterialTheme.typography.h3,
+            style = MaterialTheme.typography.h4,
             fontWeight = FontWeight.Bold
         )
 
