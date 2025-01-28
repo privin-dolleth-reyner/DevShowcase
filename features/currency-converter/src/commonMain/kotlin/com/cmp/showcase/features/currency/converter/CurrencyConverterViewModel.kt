@@ -57,7 +57,6 @@ class CurrencyConverterViewModel(
                     setCurrency(isBaseCurrency = true, currency = codes.first { it.code == "USD" })
                     setCurrency(isBaseCurrency = false, currency = codes.first { it.code =="INR" })
                 }
-                println("Success VM")
             }catch (e: Exception){
                 println(e.printStackTrace())
                 _state.value = _state.value.copy(currencyUiState = CurrencyUiState.Error(e.message ?: "Something went wrong!"))
@@ -70,10 +69,8 @@ class CurrencyConverterViewModel(
             try {
                 val value = getConversionAmount(baseCurrencyCode,targetCurrencyCode, amount)
                 _state.value = _state.value.copy(targetAmount = _state.value.targetAmount.copy(title = value.toString()))
-                println("Success VM")
             }catch (e: Exception){
                 println(e.printStackTrace())
-//                _state.value = CurrencyUiState.Error(e.message ?: "Something went wrong!")
             }
 
         }
@@ -124,8 +121,8 @@ class CurrencyConverterViewModel(
         try {
             convert(_state.value.baseCurrencyCode.title, _state.value.targetCurrencyCode.title, _state.value.baseAmount.title.toDouble())
         }catch (e : NumberFormatException){
-            println("Invalid number format")
-           clear()
+            e.printStackTrace()
+            clear()
         }
     }
 
@@ -142,7 +139,6 @@ class CurrencyConverterViewModel(
     }
 
     fun setCurrency(isBaseCurrency: Boolean, currency: Currency) {
-        println("Set currency ${currency.code}, $isBaseCurrency")
         if (isBaseCurrency){
             _state.value = _state.value.copy(baseCurrencyCode = _state.value.baseCurrencyCode.copy(title = currency.code), baseCountry = currency.name)
         }else{
