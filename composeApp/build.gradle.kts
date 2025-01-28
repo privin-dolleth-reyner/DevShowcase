@@ -10,13 +10,14 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.serialization)
+    alias(libs.plugins.googleGmsGoogleServices)
 }
 
 kotlin {
     androidTarget {
         @OptIn(ExperimentalKotlinGradlePluginApi::class)
         compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_11)
+            jvmTarget.set(JvmTarget.JVM_17)
         }
     }
     
@@ -41,6 +42,7 @@ kotlin {
             implementation(projects.core.ui)
             implementation(projects.core.data)
             implementation(projects.features.projects)
+            api(projects.features.profile)
             implementation(projects.features.currencyConverter)
             implementation(libs.navigation.compose)
             api(libs.kotlinx.serializable)
@@ -74,8 +76,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 }
 

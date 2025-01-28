@@ -1,5 +1,6 @@
 package com.cmp.showcase
 
+import ProfileScreen
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -7,7 +8,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
@@ -78,12 +78,13 @@ fun HomeScreen(navigationController: NavController, modifier: Modifier = Modifie
                         })
                     }
                     composable<HomeScreenRoutes.About> {
-                        Box(
-                            contentAlignment = Alignment.Center,
-                            modifier = Modifier.fillMaxSize()
-                        ) {
-                            Text("About screen ", color = MaterialTheme.colors.onSurface)
-                        }
+                        ProfileScreen()
+//                        Box(
+//                            contentAlignment = Alignment.Center,
+//                            modifier = Modifier.fillMaxSize()
+//                        ) {
+//                            Text("About screen ", color = MaterialTheme.colors.onSurface)
+//                        }
                     }
                 }
             }

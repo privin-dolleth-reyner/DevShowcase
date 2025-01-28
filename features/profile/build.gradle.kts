@@ -1,7 +1,5 @@
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
-import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -24,7 +22,7 @@ kotlin {
         iosSimulatorArm64()
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
-            baseName = "featuresProjects"
+            baseName = "featuresProfile"
             isStatic = true
         }
     }
@@ -32,12 +30,13 @@ kotlin {
     sourceSets{
         commonMain.dependencies {
             implementation(projects.core.ui)
+            api(projects.data.profile)
         }
     }
 }
 
 android {
-    namespace = "com.cmp.showcase.features.projects"
+    namespace = "com.cmp.showcase.features.profile"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
