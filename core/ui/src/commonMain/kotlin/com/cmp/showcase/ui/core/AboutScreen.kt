@@ -39,8 +39,6 @@ fun AboutScreen(onAboutDeveloperClick: ()-> Unit, modifier: Modifier = Modifier)
             style = MaterialTheme.typography.body1,
         )
 
-        Spacer(modifier = Modifier.height(8.dp))
-
         OutlinedButton(
             onClick = onAboutDeveloperClick,
             modifier = Modifier.align(Alignment.CenterHorizontally)

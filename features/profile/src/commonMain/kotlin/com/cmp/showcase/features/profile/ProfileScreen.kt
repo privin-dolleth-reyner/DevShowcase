@@ -1,3 +1,5 @@
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -17,6 +19,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Card
 import androidx.compose.material.Chip
 import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.Divider
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -47,12 +50,20 @@ import org.koin.compose.viewmodel.koinViewModel
 fun ProfileScreen(viewmodel: ProfileViewmodel = koinViewModel(), onBackClick: () -> Unit) {
     val state by viewmodel.state.collectAsState()
 
+    val scrollState = rememberScrollState()
     Surface(Modifier.padding(top = 16.dp)) {
         Column {
-            IconButton(onClick = onBackClick, modifier = Modifier.padding(top = 16.dp).height(60.dp).align(Alignment.Start)){
-                Icon(imageVector = Icons.AutoMirrored.Filled.ArrowBack, contentDescription = null, tint = MaterialTheme.colors.onSurface)
+            Row(modifier = Modifier.height(80.dp).padding(top = 16.dp)) {
+                IconButton(onClick = onBackClick, modifier = Modifier.align(Alignment.CenterVertically)){
+                    Icon(imageVector = Icons.AutoMirrored.Filled.ArrowBack, contentDescription = null, tint = MaterialTheme.colors.onSurface)
+                }
+                if(scrollState.value > 150){
+                    AnimatedVisibility(visible = true, modifier = Modifier.align(Alignment.CenterVertically).weight(1f)){
+                        Text(text = state.profile?.getName()?: "", style = MaterialTheme.typography.h5)
+                    }
+                }
             }
-
+            Divider(Modifier.height(1.dp))
             when(val uiState = state.uiState){
                 is UiState.Error -> {
                     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center){
@@ -64,15 +75,18 @@ fun ProfileScreen(viewmodel: ProfileViewmodel = koinViewModel(), onBackClick: ()
                         CircularProgressIndicator()
                     }
                 }
-                UiState.Success -> Profile(state, onBackClick = onBackClick)
+                UiState.Success -> Profile(
+                    state = state,
+                    scrollState = scrollState,
+                    onBackClick = onBackClick
+                )
             }
         }
     }
 }
 
 @Composable
-fun Profile(state: ProfileState, onBackClick: () -> Unit) {
-    val scrollState = rememberScrollState()
+fun Profile(state: ProfileState,scrollState: ScrollState, onBackClick: () -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -85,7 +99,7 @@ fun Profile(state: ProfileState, onBackClick: () -> Unit) {
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        SectionTitle(title = "About")
+        SectionTitle(title = "Summary")
         Text(
             text = state.profile?.about ?: "",
             modifier = Modifier.padding(vertical = 8.dp)
