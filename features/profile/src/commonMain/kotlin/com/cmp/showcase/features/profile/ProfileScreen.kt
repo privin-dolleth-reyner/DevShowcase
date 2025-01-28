@@ -31,13 +31,19 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Place
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.boundsInWindow
+import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.cmp.showcase.data.profile.Profile
@@ -51,13 +57,15 @@ fun ProfileScreen(viewmodel: ProfileViewmodel = koinViewModel(), onBackClick: ()
     val state by viewmodel.state.collectAsState()
 
     val scrollState = rememberScrollState()
-    Surface(Modifier.padding(top = 16.dp)) {
-        Column {
+    val isNameVisible = remember { mutableStateOf(false) }
+
+    Surface {
+        Column(modifier = Modifier.padding(top = 16.dp)) {
             Row(modifier = Modifier.height(80.dp).padding(top = 16.dp)) {
                 IconButton(onClick = onBackClick, modifier = Modifier.align(Alignment.CenterVertically)){
                     Icon(imageVector = Icons.AutoMirrored.Filled.ArrowBack, contentDescription = null, tint = MaterialTheme.colors.onSurface)
                 }
-                if(scrollState.value > 150){
+                if(isNameVisible.value.not()){
                     AnimatedVisibility(visible = true, modifier = Modifier.align(Alignment.CenterVertically).weight(1f)){
                         Text(text = state.profile?.getName()?: "", style = MaterialTheme.typography.h5)
                     }
@@ -78,7 +86,7 @@ fun ProfileScreen(viewmodel: ProfileViewmodel = koinViewModel(), onBackClick: ()
                 UiState.Success -> Profile(
                     state = state,
                     scrollState = scrollState,
-                    onBackClick = onBackClick
+                    isNameVisible = isNameVisible
                 )
             }
         }
@@ -86,7 +94,7 @@ fun ProfileScreen(viewmodel: ProfileViewmodel = koinViewModel(), onBackClick: ()
 }
 
 @Composable
-fun Profile(state: ProfileState,scrollState: ScrollState, onBackClick: () -> Unit) {
+fun Profile(state: ProfileState,scrollState: ScrollState, isNameVisible: MutableState<Boolean>) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -94,7 +102,7 @@ fun Profile(state: ProfileState,scrollState: ScrollState, onBackClick: () -> Uni
             .padding(16.dp)
     ) {
         state.profile?.let {
-            ProfileHeader(it,onBackClick)
+            ProfileHeader(it, isNameVisible)
         }
 
         Spacer(modifier = Modifier.height(24.dp))
@@ -152,18 +160,22 @@ fun Profile(state: ProfileState,scrollState: ScrollState, onBackClick: () -> Uni
 }
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-private fun ProfileHeader(profile: Profile, onBackClick: ()-> Unit) {
+private fun ProfileHeader(profile: Profile, isNameVisible: MutableState<Boolean>) {
     Column(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-
         Spacer(modifier = Modifier.height(16.dp))
 
         Text(
             text = profile.getName(),
             style = MaterialTheme.typography.h4,
-            fontWeight = FontWeight.Bold
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Center,
+            modifier = Modifier.onGloballyPositioned { layoutCoordinates ->
+                val position = layoutCoordinates.boundsInWindow()
+                isNameVisible.value = position.top != 0f && position.bottom != 0f
+            }
         )
 
         Spacer(modifier = Modifier.height(16.dp))

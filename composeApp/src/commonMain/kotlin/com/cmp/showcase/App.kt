@@ -101,7 +101,7 @@ fun App() {
             ) {
                 composable<ProfileScreenRoutes.Home> {
                     ProfileScreen(onBackClick = {
-                        navController.popBackStack()
+                        navController.navigateUp()
                     })
                 }
             }
