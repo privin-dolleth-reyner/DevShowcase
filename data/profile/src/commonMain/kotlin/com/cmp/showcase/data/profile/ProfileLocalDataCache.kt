@@ -5,4 +5,5 @@ object ProfileLocalDataCache {
     var experiences = emptyList<Experience>()
     var education = emptyList<Education>()
     var projects = emptyList<Project>()
+    var languages = emptyList<Language>()
 }

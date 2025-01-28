@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Button
 import androidx.compose.material.Card
 import androidx.compose.material.Chip
 import androidx.compose.material.CircularProgressIndicator
@@ -135,7 +136,7 @@ fun Profile(
             .padding(16.dp)
     ) {
         state.profile?.let {
-            ProfileHeader(it, isNameVisible, onEmailClick)
+            ProfileHeader(it, isNameVisible, onEmailClick, onUrlClick)
         }
 
         Spacer(modifier = Modifier.height(24.dp))
@@ -190,6 +191,15 @@ fun Profile(
             )
         }
 
+        Spacer(modifier = Modifier.height(24.dp))
+
+        SectionTitle(title = "Languages")
+        state.languages.forEach { language ->
+            LanguageItem(
+                name = language.name
+            )
+        }
+
         Spacer(modifier = Modifier.height(200.dp))
 
     }
@@ -200,7 +210,8 @@ fun Profile(
 private fun ProfileHeader(
     profile: Profile,
     isNameVisible: MutableState<Boolean>,
-    onEmailClick: (String) -> Unit
+    onEmailClick: (String) -> Unit,
+    onUrlClick: (String) -> Unit
 ) {
     Column(
         modifier = Modifier.fillMaxWidth(),
@@ -241,6 +252,25 @@ private fun ProfileHeader(
                 onEmailClick(profile.emailAddress)
             })
         }
+
+        FlowRow(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 16.dp),
+            horizontalArrangement = Arrangement.Center
+        ) {
+            Button(onClick = {
+                onUrlClick(profile.linkedInUrl)
+            }){
+                Text("LinkedIn", style = MaterialTheme.typography.button)
+            }
+            Spacer(modifier = Modifier.width(16.dp))
+            Button(onClick = {
+                onUrlClick(profile.githubUrl)
+            }){
+                Text("Github", style = MaterialTheme.typography.button)
+            }
+        }
     }
 }
 
@@ -276,7 +306,7 @@ private fun ExperienceItem(
             if (company.isNotEmpty()) {
                 Text(text = company, color = Color.Gray)
             }
-            Text(text = duration, fontSize = MaterialTheme.typography.subtitle2.fontSize)
+            Text(text = duration, style =  MaterialTheme.typography.subtitle2)
             Text(
                 text = description,
                 style = MaterialTheme.typography.body2,
@@ -300,9 +330,26 @@ private fun EducationItem(
         shape = RoundedCornerShape(8.dp)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
-            Text(text = school, fontWeight = FontWeight.Bold)
-            Text(text = degree)
-            Text(text = duration, fontSize = 12.sp)
+            Text(text = school, style = MaterialTheme.typography.subtitle1.copy(fontWeight = FontWeight.Bold))
+            Text(text = degree, style = MaterialTheme.typography.subtitle2)
+            Text(text = duration, style = MaterialTheme.typography.body2)
+        }
+    }
+}
+
+@Composable
+private fun LanguageItem(
+    name: String,
+) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 8.dp),
+        elevation = 4.dp,
+        shape = RoundedCornerShape(8.dp)
+    ) {
+        Column(modifier = Modifier.padding(16.dp)) {
+            Text(text = name, style = MaterialTheme.typography.subtitle1)
         }
     }
 }
@@ -324,8 +371,8 @@ private fun ProjectItem(
         onClick = onClick
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
-            Text(text = title, fontWeight = FontWeight.Bold)
-            Text(text = description)
+            Text(text = title, style = MaterialTheme.typography.subtitle1.copy(fontWeight = FontWeight.Bold))
+            Text(text = description, style = MaterialTheme.typography.body1)
             Text(text = link, fontSize = 12.sp)
         }
     }

@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cmp.showcase.data.profile.Education
 import com.cmp.showcase.data.profile.Experience
+import com.cmp.showcase.data.profile.Language
 import com.cmp.showcase.data.profile.Profile
 import com.cmp.showcase.data.profile.ProfileRepository
 import com.cmp.showcase.data.profile.Project
@@ -39,6 +40,7 @@ class ProfileViewmodel(private val profileRepository: ProfileRepository): ViewMo
             loadExperiences()
             loadEducation()
             loadProjects()
+            loadLanguages()
             _state.value = _state.value.copy(uiState = UiState.Success)
         }
     }
@@ -69,6 +71,15 @@ class ProfileViewmodel(private val profileRepository: ProfileRepository): ViewMo
             )
         }
     }
+
+    private fun loadLanguages() {
+        viewModelScope.launch(context) {
+            val languages = profileRepository.getLanguages()
+            _state.value = _state.value.copy(
+                languages = languages
+            )
+        }
+    }
 }
 
 
@@ -77,6 +88,7 @@ data class ProfileState (
     val experiences: List<Experience> = emptyList(),
     val educations: List<Education> = emptyList(),
     val projects: List<Project> = emptyList(),
+    val languages: List<Language> = emptyList(),
     val uiState: UiState = UiState.Loading
 )
 

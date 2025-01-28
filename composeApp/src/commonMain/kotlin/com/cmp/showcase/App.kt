@@ -105,7 +105,7 @@ fun NavGraphBuilder.currencyConverterGraph(
                     navController.navigate(CurrencyConverterRoutes.SelectCurrency(it))
                 },
                 onBackClick = {
-                    navController.navigateUp()
+                    onBackClick(navController)
                 })
         }
         composable<CurrencyConverterRoutes.SelectCurrency> {
@@ -130,14 +130,7 @@ fun NavGraphBuilder.profileGraph(navController: NavController, platformHandler: 
         composable<ProfileScreenRoutes.Home> {
             ProfileScreen(
                 onBackClick = {
-                    // Calling navigateUp() to navigate back to the previous screen is not stable at the time of development
-                    if (getPlatform().name.contains("ios", true)) {
-                        navController.navigate(AppRoutes.Home(true)) {
-                            launchSingleTop = true
-                        }
-                    } else {
-                        navController.navigateUp()
-                    }
+                    onBackClick(navController, true)
                 },
                 onUrlClick = {
                     platformHandler.handleUrl(it)
@@ -147,5 +140,16 @@ fun NavGraphBuilder.profileGraph(navController: NavController, platformHandler: 
                 }
             )
         }
+    }
+}
+
+fun onBackClick(navController: NavController, shouldShowAbout: Boolean = false){
+    // Calling navigateUp() to navigate back to the previous screen is not stable at the time of development
+    if (getPlatform().name.contains("ios", true)) {
+        navController.navigate(AppRoutes.Home(shouldShowAbout)) {
+            launchSingleTop = true
+        }
+    } else {
+        navController.navigateUp()
     }
 }

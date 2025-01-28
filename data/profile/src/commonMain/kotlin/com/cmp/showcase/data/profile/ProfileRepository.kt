@@ -11,6 +11,7 @@ interface ProfileRepository {
     suspend fun getExperiences(): List<Experience>
     suspend fun getEducations(): List<Education>
     suspend fun getProjects(): List<Project>
+    suspend fun getLanguages(): List<Language>
 }
 
 class ProfileRepositoryImpl : ProfileRepository {
@@ -20,6 +21,7 @@ class ProfileRepositoryImpl : ProfileRepository {
     private val education = profile.collection("Education")
     private val experience = profile.collection("Experience")
     private val projects = profile.collection("Projects")
+    private val languages = profile.collection("Languages")
 
     override suspend fun getProfile(): Profile {
         if (ProfileLocalDataCache.profile != null) return ProfileLocalDataCache.profile!!
@@ -56,6 +58,16 @@ class ProfileRepositoryImpl : ProfileRepository {
             .sortedBy { it.displayPriority }
             .also {
                 ProfileLocalDataCache.projects = it
+            }
+    }
+
+    override suspend fun getLanguages(): List<Language> {
+        if (ProfileLocalDataCache.languages.isNotEmpty()) return ProfileLocalDataCache.languages
+
+        return languages.get().documents.map<DocumentSnapshot, Language> { it.data() }
+            .sortedBy { it.displayPriority }
+            .also {
+                ProfileLocalDataCache.languages = it
             }
     }
 
@@ -102,4 +114,10 @@ data class Project(
     val title: String,
     val description: String,
     val link: String
+)
+
+@Serializable
+data class Language(
+    val displayPriority: Int,
+    val name: String,
 )
