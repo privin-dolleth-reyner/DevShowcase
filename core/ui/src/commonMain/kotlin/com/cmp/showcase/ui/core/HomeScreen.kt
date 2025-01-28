@@ -21,11 +21,11 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -33,7 +33,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun HomeScreen(container: @Composable ()-> Unit, modifier: Modifier = Modifier, onBottomNavClick: (nav: BottomNavigation) -> Unit) {
+fun HomeScreen(container: @Composable ()-> Unit, modifier: Modifier = Modifier, onBottomNavClick: (nav: BottomNavigation) -> Unit, shouldShowAbout: Boolean = false) {
+    val selectedNav = rememberSaveable { mutableStateOf(if (shouldShowAbout) BottomNavigation.About else BottomNavigation.Home) }
+
     Scaffold(
         modifier = modifier.statusBarsPadding(),
         backgroundColor = MaterialTheme.colors.background,
@@ -47,12 +49,14 @@ fun HomeScreen(container: @Composable ()-> Unit, modifier: Modifier = Modifier, 
                     contentAlignment = Alignment.BottomCenter,
                     modifier = Modifier.fillMaxWidth().align(Alignment.CenterVertically)
                 ) {
-                    ElevatedNavbar(onNavClick = {
+                    ElevatedNavbar(
+                        onNavClick = {
                         when (it) {
                             BottomNavigation.Home -> onBottomNavClick(BottomNavigation.Home)
                             BottomNavigation.About -> onBottomNavClick(BottomNavigation.About)
                         }
-                    })
+                    },
+                        selectedNav = selectedNav)
                 }
             }
         }) {
@@ -65,7 +69,7 @@ fun HomeScreen(container: @Composable ()-> Unit, modifier: Modifier = Modifier, 
 
 
 @Composable
-fun ElevatedNavbar(modifier: Modifier = Modifier, onNavClick: (nav: BottomNavigation) -> Unit) {
+fun ElevatedNavbar(modifier: Modifier = Modifier, onNavClick: (nav: BottomNavigation) -> Unit, selectedNav: MutableState<BottomNavigation>) {
     val navList by remember {
         mutableStateOf(
             arrayListOf(
@@ -74,7 +78,6 @@ fun ElevatedNavbar(modifier: Modifier = Modifier, onNavClick: (nav: BottomNaviga
             )
         )
     }
-    var selectedNav by rememberSaveable { mutableStateOf(BottomNavigation.Home) }
     Surface(
         modifier.padding(4.dp),
         shape = RoundedCornerShape(24.dp),
@@ -85,10 +88,10 @@ fun ElevatedNavbar(modifier: Modifier = Modifier, onNavClick: (nav: BottomNaviga
             navList.forEach {
                 NavBarItem(
                     it,
-                    it == selectedNav,
+                    it == selectedNav.value,
                     onClick = { nav: BottomNavigation ->
-                        selectedNav = nav
-                        onNavClick(selectedNav)
+                        selectedNav.value = nav
+                        onNavClick(selectedNav.value)
                     })
             }
         }

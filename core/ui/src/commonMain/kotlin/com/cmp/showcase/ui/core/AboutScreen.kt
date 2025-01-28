@@ -21,12 +21,13 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun AboutScreen(onAboutDeveloperClick: ()-> Unit, modifier: Modifier = Modifier){
+fun AboutScreen(onAboutDeveloperClick: ()-> Unit, modifier: Modifier = Modifier, onUrlClick: (String) -> Unit){
+    val scrollState = rememberScrollState()
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp)
-            .verticalScroll(rememberScrollState()),
+            .verticalScroll(scrollState),
         verticalArrangement = Arrangement.spacedBy(16.dp),
         horizontalAlignment = Alignment.Start
     ) {
@@ -82,7 +83,7 @@ fun AboutScreen(onAboutDeveloperClick: ()-> Unit, modifier: Modifier = Modifier)
 
         BasicText(
             modifier = Modifier.clickable {
-                //
+                onUrlClick("https://github.com/privin-dolleth-reyner/ComposeShowcase")
             },
             text = AnnotatedString("GitHub Repository Link"),
             style = MaterialTheme.typography.body1.copy(

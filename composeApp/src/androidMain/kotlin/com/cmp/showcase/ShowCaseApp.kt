@@ -8,8 +8,14 @@ import org.koin.android.ext.koin.androidContext
 
 class ShowCaseApp: Application() {
 
+    companion object{
+        var instance: ShowCaseApp? = null
+            private set
+    }
+
     override fun onCreate() {
         super.onCreate()
+        instance = this
         val firebaseApp = FirebaseApp.initializeApp(applicationContext)
         initKoin {
             androidContext(this@ShowCaseApp)

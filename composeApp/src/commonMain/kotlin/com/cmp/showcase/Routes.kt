@@ -3,11 +3,9 @@ package com.cmp.showcase
 import com.cmp.showcase.ui.core.Routes
 import kotlinx.serialization.Serializable
 
-sealed interface AppRoutes {
+sealed interface AppRoutes: Routes {
     @Serializable
-    data object Graph: Routes
+    data object Graph: AppRoutes
     @Serializable
-    data object Home: Routes
-    @Serializable
-    data object Currency: Routes
+    data class Home(val showAbout: Boolean = false): AppRoutes
 }

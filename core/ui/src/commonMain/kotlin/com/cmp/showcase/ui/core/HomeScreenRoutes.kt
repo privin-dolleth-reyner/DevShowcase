@@ -9,6 +9,4 @@ sealed interface HomeScreenRoutes: Routes {
     data object Projects: HomeScreenRoutes
     @Serializable
     data object About: HomeScreenRoutes
-    @Serializable
-    data class ProjectDetail(val id: String): HomeScreenRoutes
 }
