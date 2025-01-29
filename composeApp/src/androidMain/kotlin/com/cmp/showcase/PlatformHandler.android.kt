@@ -4,10 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 
-actual fun getPlatformHandler(): PlatformHandler {
-    return AndroidPlatformHandler(ShowCaseApp.instance!!.applicationContext)
-}
-
 class AndroidPlatformHandler(private val context: Context) : PlatformHandler {
 
     override fun handleUrl(url: String) {

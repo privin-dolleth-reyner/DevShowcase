@@ -3,12 +3,7 @@ package com.cmp.showcase
 import platform.Foundation.NSURL
 import platform.UIKit.UIApplication
 
-actual fun getPlatformHandler(): PlatformHandler {
-        return IOSPhoneCallHandler()
-}
-
-
-class IOSPhoneCallHandler : PlatformHandler {
+class IOSPlatformHandler : PlatformHandler {
     override fun handleUrl(url: String) {
         try {
             val nsUrl = NSURL(string = url)
