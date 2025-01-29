@@ -32,7 +32,7 @@ kotlinx-datetime = "0.6.1"
 googleGmsGoogleServices = "4.4.2"
 firebaseFirestore = "25.1.1"
 gradlePlugins-crashlytics = "3.0.2"
-firebase-crashlytics = "32.8.1"
+firebase-crashlytics = "19.4.0"
 kotlin-firestore = "2.1.0"
 
 [libraries]
@@ -79,7 +79,7 @@ sqldelight-android = { module= "app.cash.sqldelight:android-driver", version.ref
 sqldelight-native = { module= "app.cash.sqldelight:native-driver", version.ref = "sqlDelight" }
 kotlin-firestore = { module= "dev.gitlive:firebase-firestore", version.ref = "kotlin-firestore" }
 firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore-ktx", version.ref = "firebaseFirestore" }
-firebase-android-crashlytics-ktx = { module = "com.google.firebase:firebase-crashlytics", version.ref="firebase-crashlytics"}
+firebase-crashlytics-ktx = { module = "com.google.firebase:firebase-crashlytics-ktx", version.ref="firebase-crashlytics"}
 
 [bundles]
 koin = ["koin-core", "koin-compose", "koin-compose-viewmodel"]
