@@ -101,8 +101,13 @@ class CurrencyConverterViewModel(
                 onSwapCurrency()
             }
             InputType.Backspace ->{
-                _state.value = _state.value.copy(baseAmount = _state.value.baseAmount.copy(title = _state.value.baseAmount.title.dropLast(1)))
-                convertAndUpdateView()
+                val baseAmount = _state.value.baseAmount.title
+                if (baseAmount.length > 1){
+                    _state.value = _state.value.copy(baseAmount = _state.value.baseAmount.copy(title = baseAmount.dropLast(1)))
+                    convertAndUpdateView()
+                }else{
+                    clear()
+                }
             }
             else -> {
                 // do nothing
