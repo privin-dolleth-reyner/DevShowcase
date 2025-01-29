@@ -9,13 +9,11 @@ import io.ktor.client.request.get
 class RemoteDataSource(private val client: HttpClient) {
 
     suspend fun getSupportedCurrencies(): GetCurrencyCodes{
-        println("Fetching currencies from remote")
         val response = client.get("/v6/codes")
         return response.body<GetCurrencyCodes>()
     }
 
     suspend fun getExchangeRates(baseCurrencyCode: String): GetExchangeRate{
-        println("Fetching exchange rates from remote")
         val response = client.get("/v6/latest/$baseCurrencyCode")
         return response.body<GetExchangeRate>()
     }

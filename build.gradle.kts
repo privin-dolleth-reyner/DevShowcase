@@ -9,4 +9,7 @@ plugins {
     alias(libs.plugins.serialization) apply false
     alias(libs.plugins.buildConfig) apply false
     alias(libs.plugins.sqlDelight) apply false
+    alias(libs.plugins.kotlinAndroid) apply false
+    alias(libs.plugins.googleGmsGoogleServices) apply false
+    alias(libs.plugins.crashlytics) apply false
 }

@@ -7,6 +7,8 @@ import com.cmp.showcase.data.currency.converter.usecase.GetCodes
 import com.cmp.showcase.data.currency.converter.usecase.GetConversionAmount
 import com.cpm.showcase.domain.currency.converter.entity.Currency
 import com.cpm.showcase.domain.currency.converter.repository.CurrencyConverterRepo
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -47,7 +49,7 @@ class CurrencyConverterViewModel(
 
     fun fetchCodes(shouldSetDefault: Boolean = false){
         _state.value = _state.value.copy(currencyUiState = CurrencyUiState.Loading)
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             try {
                 val codes = getCodes()
                 _state.value = _state.value.copy(currencyUiState = CurrencyUiState.SupportedCurrencies(codes))
@@ -55,7 +57,6 @@ class CurrencyConverterViewModel(
                     setCurrency(isBaseCurrency = true, currency = codes.first { it.code == "USD" })
                     setCurrency(isBaseCurrency = false, currency = codes.first { it.code =="INR" })
                 }
-                println("Success VM")
             }catch (e: Exception){
                 println(e.printStackTrace())
                 _state.value = _state.value.copy(currencyUiState = CurrencyUiState.Error(e.message ?: "Something went wrong!"))
@@ -64,14 +65,12 @@ class CurrencyConverterViewModel(
     }
 
     private fun convert(baseCurrencyCode: String, targetCurrencyCode: String, amount: Double){
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             try {
                 val value = getConversionAmount(baseCurrencyCode,targetCurrencyCode, amount)
                 _state.value = _state.value.copy(targetAmount = _state.value.targetAmount.copy(title = value.toString()))
-                println("Success VM")
             }catch (e: Exception){
                 println(e.printStackTrace())
-//                _state.value = CurrencyUiState.Error(e.message ?: "Something went wrong!")
             }
 
         }
@@ -122,8 +121,8 @@ class CurrencyConverterViewModel(
         try {
             convert(_state.value.baseCurrencyCode.title, _state.value.targetCurrencyCode.title, _state.value.baseAmount.title.toDouble())
         }catch (e : NumberFormatException){
-            println("Invalid number format")
-           clear()
+            e.printStackTrace()
+            clear()
         }
     }
 
@@ -140,7 +139,6 @@ class CurrencyConverterViewModel(
     }
 
     fun setCurrency(isBaseCurrency: Boolean, currency: Currency) {
-        println("Set currency ${currency.code}, $isBaseCurrency")
         if (isBaseCurrency){
             _state.value = _state.value.copy(baseCurrencyCode = _state.value.baseCurrencyCode.copy(title = currency.code), baseCountry = currency.name)
         }else{
@@ -152,9 +150,13 @@ class CurrencyConverterViewModel(
 
     private fun setRates(){
         viewModelScope.launch {
-            val baseToTargetRate = currencyConverterRepo.getRate(_state.value.baseCurrencyCode.title, _state.value.targetCurrencyCode.title)
-            val targetToBaseRate = currencyConverterRepo.getRate(_state.value.targetCurrencyCode.title, _state.value.baseCurrencyCode.title)
-            _state.value = _state.value.copy(baseToTargetRate = baseToTargetRate.toString(), targetToBaseRate = targetToBaseRate.toString())
+            try {
+                val baseToTargetRate = currencyConverterRepo.getRate(_state.value.baseCurrencyCode.title, _state.value.targetCurrencyCode.title)
+                val targetToBaseRate = currencyConverterRepo.getRate(_state.value.targetCurrencyCode.title, _state.value.baseCurrencyCode.title)
+                _state.value = _state.value.copy(baseToTargetRate = baseToTargetRate.toString(), targetToBaseRate = targetToBaseRate.toString())
+            }catch (e: Exception){
+                e.printStackTrace()
+            }
         }
     }
 }

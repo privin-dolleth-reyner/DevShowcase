@@ -11,12 +11,10 @@ class LocalDataSource(databaseFactory: DatabaseFactory) {
     private val query = database.currencyConverterQueries
 
     suspend fun getAllCurrencies(): List<Currency> {
-        println("Get all cached currencies")
         return query.getAllCurrencies().executeAsList().map { Currency(it.name, it.code) }
     }
 
     suspend fun insertAllCurrencies(list: List<Currency>){
-        println("Insert all currencies")
         query.transaction {
             list.forEach {
                 query.insertCurrency(name = it.name, code =  it.code)
@@ -34,7 +32,6 @@ class LocalDataSource(databaseFactory: DatabaseFactory) {
     }
 
     suspend fun insertAllExchangeRates(baseCurrencyCode: String, map: Map<String,Double>, lastUpdate: Long, nextUpdate: Long){
-        println("Insert all exchange rates")
         query.transaction {
             map.forEach {
                 query.insertExchangeRate(baseCurrencyCode, it.key, it.value, lastUpdate, nextUpdate)
@@ -48,7 +45,6 @@ class LocalDataSource(databaseFactory: DatabaseFactory) {
     }
 
     suspend fun getExchangeRate(baseCurrencyCode: String, targetCurrencyCode: String): ExchangeRateTable? {
-        println("Get cached exchange rates")
         return query.getExchangeRate(baseCurrencyCode, targetCurrencyCode).executeAsOneOrNull()
     }
 }

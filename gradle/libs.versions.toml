@@ -29,7 +29,11 @@ ksp = "1.5.30-1.0.0"
 room = "2.7.0-alpha12"
 sqlite = "2.5.0-SNAPSHOT"
 kotlinx-datetime = "0.6.1"
-
+googleGmsGoogleServices = "4.4.2"
+firebaseFirestore = "25.1.1"
+gradlePlugins-crashlytics = "3.0.2"
+firebase-crashlytics = "32.8.1"
+kotlin-firestore = "2.1.0"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -73,6 +77,9 @@ room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
 sqlite-bundled = { module= "androidx.sqlite:sqlite-bundled", version.ref = "sqlite" }
 sqldelight-android = { module= "app.cash.sqldelight:android-driver", version.ref = "sqlDelight" }
 sqldelight-native = { module= "app.cash.sqldelight:native-driver", version.ref = "sqlDelight" }
+kotlin-firestore = { module= "dev.gitlive:firebase-firestore", version.ref = "kotlin-firestore" }
+firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore-ktx", version.ref = "firebaseFirestore" }
+firebase-android-crashlytics-ktx = { module = "com.google.firebase:firebase-crashlytics", version.ref="firebase-crashlytics"}
 
 [bundles]
 koin = ["koin-core", "koin-compose", "koin-compose-viewmodel"]
@@ -95,3 +102,6 @@ buildConfig = { id = "com.github.gmazzo.buildconfig", version.ref = "buildConfig
 sqlDelight = { id = "app.cash.sqldelight", version.ref = "sqlDelight" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 room = { id = "androidx.room", version.ref = "room" }
+kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+googleGmsGoogleServices = { id = "com.google.gms.google-services", version.ref = "googleGmsGoogleServices" }
+crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "gradlePlugins-crashlytics" }
