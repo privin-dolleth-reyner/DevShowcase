@@ -118,8 +118,10 @@ class CurrencyConverterViewModel(
     }
 
     private fun convertAndUpdateView(){
+        val baseAmount = _state.value.baseAmount.title
+        if (baseAmount.isEmpty()) return
         try {
-            convert(_state.value.baseCurrencyCode.title, _state.value.targetCurrencyCode.title, _state.value.baseAmount.title.toDouble())
+            convert(_state.value.baseCurrencyCode.title, _state.value.targetCurrencyCode.title, baseAmount.toDouble())
         }catch (e : NumberFormatException){
             e.printStackTrace()
             clear()
