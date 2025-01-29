@@ -35,6 +35,7 @@ class ProfileRepositoryImpl : ProfileRepository {
         if (ProfileLocalDataCache.experiences.isNotEmpty()) return ProfileLocalDataCache.experiences
 
         return experience.get().documents.map<DocumentSnapshot, Experience> { it.data() }
+            .filter { it.displayPriority > 0 }
             .sortedBy { it.displayPriority }
             .also {
                 ProfileLocalDataCache.experiences = it
@@ -45,6 +46,7 @@ class ProfileRepositoryImpl : ProfileRepository {
         if (ProfileLocalDataCache.education.isNotEmpty()) return ProfileLocalDataCache.education
 
         return education.get().documents.map<DocumentSnapshot, Education> { it.data() }
+            .filter { it.displayPriority > 0 }
             .sortedBy { it.displayPriority }
             .also {
                 ProfileLocalDataCache.education = it
@@ -55,6 +57,7 @@ class ProfileRepositoryImpl : ProfileRepository {
         if (ProfileLocalDataCache.projects.isNotEmpty()) return ProfileLocalDataCache.projects
 
         return projects.get().documents.map<DocumentSnapshot, Project> { it.data() }
+            .filter { it.displayPriority > 0 }
             .sortedBy { it.displayPriority }
             .also {
                 ProfileLocalDataCache.projects = it
@@ -65,6 +68,7 @@ class ProfileRepositoryImpl : ProfileRepository {
         if (ProfileLocalDataCache.languages.isNotEmpty()) return ProfileLocalDataCache.languages
 
         return languages.get().documents.map<DocumentSnapshot, Language> { it.data() }
+            .filter { it.displayPriority > 0 }
             .sortedBy { it.displayPriority }
             .also {
                 ProfileLocalDataCache.languages = it

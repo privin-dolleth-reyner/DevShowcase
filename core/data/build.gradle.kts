@@ -29,6 +29,9 @@ kotlin {
         commonMain.dependencies {
             api(libs.cmp.settings)
             api(libs.kotlinx.coroutines.core)
+            api(libs.datastore)
+            api(libs.datastore.preferences)
+            api(libs.koin.core)
         }
 
         androidMain.dependencies {

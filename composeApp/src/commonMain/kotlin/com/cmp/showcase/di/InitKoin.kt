@@ -1,5 +1,6 @@
 package com.cmp.showcase.di
 
+import com.cmp.showcase.data.core.di.coreDataModule
 import com.cmp.showcase.data.currency.converter.di.currencyDataModule
 import com.cmp.showcase.data.profile.di.profileDataModule
 import com.cmp.showcase.features.currency.converter.di.currencyFeatureModule
@@ -14,6 +15,7 @@ fun initKoin(config: KoinAppDeclaration? = null){
 
         modules(
             appModule,
+            *coreDataModule(),
             *currencyDataModule(),
             *currencyFeatureModule(),
             *profileDataModule(),

@@ -3,12 +3,16 @@ package com.cmp.showcase
 import ProfileScreen
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
+import com.cmp.showcase.data.core.AppSettings
 import com.cmp.showcase.features.currency.converter.CurrencyConverterRoutes
 import com.cmp.showcase.features.currency.converter.CurrencyConverterScreen
 import com.cmp.showcase.features.currency.converter.CurrencyConverterViewModel
@@ -19,6 +23,7 @@ import com.cmp.showcase.ui.core.BottomNavigation
 import com.cmp.showcase.ui.core.HomeScreen
 import com.cmp.showcase.ui.core.HomeScreenRoutes
 import com.cpm.showcase.features.projects.ProjectsScreen
+import kotlinx.coroutines.launch
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
@@ -29,8 +34,12 @@ expect fun MyTheme(darkTheme: Boolean, content: @Composable() () -> Unit)
 
 @Composable
 @Preview
-fun App() {
-    MyTheme(isSystemInDarkTheme()) {
+fun App(appSettings: AppSettings = koinInject()) {
+    val isDarkTheme by appSettings.isDarkThemeEnabled().collectAsStateWithLifecycle(
+        isSystemInDarkTheme()
+    )
+    println("isDarkTheme $isDarkTheme")
+    MyTheme(isDarkTheme) {
         val navController = rememberNavController()
         val platformHandler = koinInject<PlatformHandler>()
         val viewModel: CurrencyConverterViewModel = koinViewModel()
@@ -38,21 +47,27 @@ fun App() {
             navController = navController,
             startDestination = AppRoutes.Graph
         ) {
-            appGraph(navController, platformHandler)
+            appGraph(navController, platformHandler, appSettings)
             currencyConverterGraph(navController, viewModel)
             profileGraph(navController, platformHandler)
         }
     }
 }
 
-fun NavGraphBuilder.appGraph(navController: NavController, platformHandler: PlatformHandler) {
+fun NavGraphBuilder.appGraph(navController: NavController, platformHandler: PlatformHandler, appSettings: AppSettings) {
     navigation<AppRoutes.Graph>(
         startDestination = AppRoutes.Home()
     ) {
         composable<AppRoutes.Home> { args ->
+            val coroutineScope = rememberCoroutineScope()
             val shouldShowAboutScreen = args.arguments?.getBoolean("showAbout") ?: false
             val homeNavController = rememberNavController()
             HomeScreen(
+                onToggleTheme = {
+                    coroutineScope.launch {
+                        appSettings.toggleTheme()
+                    }
+                },
                 shouldShowAbout = shouldShowAboutScreen,
                 onBottomNavClick = {
                     when (it) {

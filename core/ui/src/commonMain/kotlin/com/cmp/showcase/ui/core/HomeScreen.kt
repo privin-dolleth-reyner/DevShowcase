@@ -16,6 +16,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.Divider
 import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
@@ -31,10 +32,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import composeshowcase.core.ui.generated.resources.Res
+import composeshowcase.core.ui.generated.resources.switch_theme_icon
+import org.jetbrains.compose.resources.painterResource
 
 @Composable
-fun HomeScreen(container: @Composable ()-> Unit, modifier: Modifier = Modifier, onBottomNavClick: (nav: BottomNavigation) -> Unit, shouldShowAbout: Boolean = false) {
-    val selectedNav = rememberSaveable { mutableStateOf(if (shouldShowAbout) BottomNavigation.About else BottomNavigation.Home) }
+fun HomeScreen(
+    container: @Composable () -> Unit,
+    modifier: Modifier = Modifier,
+    onBottomNavClick: (nav: BottomNavigation) -> Unit,
+    shouldShowAbout: Boolean = false,
+    onToggleTheme: () -> Unit
+) {
+    val selectedNav =
+        rememberSaveable { mutableStateOf(if (shouldShowAbout) BottomNavigation.About else BottomNavigation.Home) }
 
     Scaffold(
         modifier = modifier.statusBarsPadding(),
@@ -51,17 +62,18 @@ fun HomeScreen(container: @Composable ()-> Unit, modifier: Modifier = Modifier, 
                 ) {
                     ElevatedNavbar(
                         onNavClick = {
-                        when (it) {
-                            BottomNavigation.Home -> onBottomNavClick(BottomNavigation.Home)
-                            BottomNavigation.About -> onBottomNavClick(BottomNavigation.About)
-                        }
-                    },
-                        selectedNav = selectedNav)
+                            when (it) {
+                                BottomNavigation.Home -> onBottomNavClick(BottomNavigation.Home)
+                                BottomNavigation.About -> onBottomNavClick(BottomNavigation.About)
+                            }
+                        },
+                        selectedNav = selectedNav
+                    )
                 }
             }
         }) {
         Column {
-            Title()
+            Title(onToggleTheme = onToggleTheme)
             container()
         }
     }
@@ -69,7 +81,11 @@ fun HomeScreen(container: @Composable ()-> Unit, modifier: Modifier = Modifier, 
 
 
 @Composable
-fun ElevatedNavbar(modifier: Modifier = Modifier, onNavClick: (nav: BottomNavigation) -> Unit, selectedNav: MutableState<BottomNavigation>) {
+fun ElevatedNavbar(
+    modifier: Modifier = Modifier,
+    onNavClick: (nav: BottomNavigation) -> Unit,
+    selectedNav: MutableState<BottomNavigation>
+) {
     val navList by remember {
         mutableStateOf(
             arrayListOf(
@@ -128,11 +144,12 @@ fun NavBarItem(
 
 
 @Composable
-private fun Title(modifier: Modifier = Modifier) {
-    Column (modifier = modifier){
+private fun Title(modifier: Modifier = Modifier, onToggleTheme: () -> Unit) {
+    Column(modifier = modifier) {
         Row(
             modifier = Modifier.fillMaxWidth().height(80.dp)
                 .background(MaterialTheme.colors.surface),
+            horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
@@ -140,8 +157,17 @@ private fun Title(modifier: Modifier = Modifier) {
                 textAlign = TextAlign.Start,
                 style = MaterialTheme.typography.h5,
                 color = MaterialTheme.colors.onSurface,
-                modifier = Modifier.fillMaxWidth().padding(start = 16.dp)
+                modifier = Modifier.padding(start = 16.dp)
             )
+
+            IconButton(
+                onClick = onToggleTheme
+            ) {
+                Icon(
+                    painter = painterResource(Res.drawable.switch_theme_icon),
+                    contentDescription = null
+                )
+            }
 
         }
         Divider(Modifier.fillMaxWidth(), color = MaterialTheme.colors.onSurface.copy(alpha = 0.5f))
