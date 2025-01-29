@@ -38,7 +38,6 @@ fun App(appSettings: AppSettings = koinInject()) {
     val isDarkTheme by appSettings.isDarkThemeEnabled().collectAsStateWithLifecycle(
         isSystemInDarkTheme()
     )
-    println("isDarkTheme $isDarkTheme")
     MyTheme(isDarkTheme) {
         val navController = rememberNavController()
         val platformHandler = koinInject<PlatformHandler>()

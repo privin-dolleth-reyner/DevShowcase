@@ -65,6 +65,7 @@ fun AboutScreen(onAboutDeveloperClick: ()-> Unit, modifier: Modifier = Modifier,
             "Kotlin Coroutines: For asynchronous operations",
             "MVVM Architecture: Organized for modularity and maintainability",
             "Kotlin DSL: For better code readability",
+            "Datastore: For storing user preferences",
         )
 
         techStack.forEach { tech ->
@@ -85,7 +86,7 @@ fun AboutScreen(onAboutDeveloperClick: ()-> Unit, modifier: Modifier = Modifier,
             modifier = Modifier.clickable {
                 onUrlClick("https://github.com/privin-dolleth-reyner/ComposeShowcase")
             },
-            text = AnnotatedString("GitHub Repository Link"),
+            text = AnnotatedString("GitHub Repository"),
             style = MaterialTheme.typography.body1.copy(
                 color = MaterialTheme.colors.primary,
                 textDecoration = TextDecoration.Underline
