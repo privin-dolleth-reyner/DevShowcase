@@ -32,8 +32,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import composeshowcase.core.ui.generated.resources.Res
-import composeshowcase.core.ui.generated.resources.switch_theme_icon
+import devshowcase.core.ui.generated.resources.Res
+import devshowcase.core.ui.generated.resources.switch_theme_icon
 import org.jetbrains.compose.resources.painterResource
 
 @Composable
