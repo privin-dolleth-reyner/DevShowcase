@@ -48,6 +48,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import devshowcase.features.currency_converter.generated.resources.Res
+import devshowcase.features.currency_converter.generated.resources.currency_converter_title
+import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -103,7 +106,7 @@ private fun Title(onBackClick: () -> Unit, modifier: Modifier = Modifier) {
                 )
             }
             Text(
-                "Currency Converter",
+                text = stringResource(Res.string.currency_converter_title),
                 textAlign = TextAlign.Start,
                 style = MaterialTheme.typography.h5,
                 color = MaterialTheme.colors.onSurface,

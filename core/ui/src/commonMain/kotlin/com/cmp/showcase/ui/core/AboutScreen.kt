@@ -19,6 +19,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
+import devshowcase.core.ui.generated.resources.Res
+import devshowcase.core.ui.generated.resources.about_app
+import devshowcase.core.ui.generated.resources.about_developer
+import devshowcase.core.ui.generated.resources.about_git_repository
+import devshowcase.core.ui.generated.resources.about_repository
+import devshowcase.core.ui.generated.resources.about_summary
+import devshowcase.core.ui.generated.resources.about_tech
+import devshowcase.core.ui.generated.resources.about_tech_stack
+import org.jetbrains.compose.resources.stringArrayResource
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun AboutScreen(onAboutDeveloperClick: ()-> Unit, modifier: Modifier = Modifier, onUrlClick: (String) -> Unit){
@@ -32,11 +42,11 @@ fun AboutScreen(onAboutDeveloperClick: ()-> Unit, modifier: Modifier = Modifier,
         horizontalAlignment = Alignment.Start
     ) {
         Text(
-            text = "About the App",
+            text = stringResource(Res.string.about_app),
             style = MaterialTheme.typography.h4
         )
         Text(
-            text = "This app is built using Compose Multiplatform, a modern UI toolkit for building native user interfaces across Android and iOS platforms using a single Kotlin codebase. Designed with scalability and performance in mind, the app offers a seamless and responsive user experience across all supported devices.It follows a modular architecture, designed like a super app, and serves as a portfolio showcasing all the apps developed by me.",
+            text = stringResource(Res.string.about_summary),
             style = MaterialTheme.typography.body1,
         )
 
@@ -44,33 +54,21 @@ fun AboutScreen(onAboutDeveloperClick: ()-> Unit, modifier: Modifier = Modifier,
             onClick = onAboutDeveloperClick,
             modifier = Modifier.align(Alignment.CenterHorizontally)
         ){
-            Text(text = "About Developer")
+            Text(text = stringResource(Res.string.about_developer))
         }
 
         Spacer(modifier = Modifier.height(16.dp))
 
         Text(
-            text = "Tech Stack",
+            text = stringResource(Res.string.about_tech),
             style = MaterialTheme.typography.h4
         )
 
-        val techStack = listOf(
-            "Dependency Injection (Koin): To manage dependencies efficiently",
-            "Networking: Powered by Ktor for efficient API communication",
-            "Persistence: Utilizes SQLDelight for shared database management",
-            "Navigation: Compose navigation for seamless UI transitions",
-            "Offline First Approach: Ensures data is always up-to-date",
-            "Firebase firestore: For real-time database",
-            "ViewModel: For state management",
-            "Kotlin Coroutines: For asynchronous operations",
-            "MVVM Architecture: Organized for modularity and maintainability",
-            "Kotlin DSL: For better code readability",
-            "Datastore: For storing user preferences",
-        )
+        val techStack = stringArrayResource(Res.array.about_tech_stack)
 
         techStack.forEach { tech ->
             Text(
-                text = "• $tech",
+                text = tech,
                 style = MaterialTheme.typography.body1
             )
         }
@@ -78,7 +76,7 @@ fun AboutScreen(onAboutDeveloperClick: ()-> Unit, modifier: Modifier = Modifier,
         Spacer(modifier = Modifier.height(16.dp))
 
         Text(
-            text = "Repository",
+            text = stringResource(Res.string.about_repository),
             style = MaterialTheme.typography.h4
         )
 
@@ -86,7 +84,7 @@ fun AboutScreen(onAboutDeveloperClick: ()-> Unit, modifier: Modifier = Modifier,
             modifier = Modifier.clickable {
                 onUrlClick("https://github.com/privin-dolleth-reyner/ComposeShowcase")
             },
-            text = AnnotatedString("GitHub Repository"),
+            text = AnnotatedString(stringResource(Res.string.about_git_repository)),
             style = MaterialTheme.typography.body1.copy(
                 color = MaterialTheme.colors.primary,
                 textDecoration = TextDecoration.Underline

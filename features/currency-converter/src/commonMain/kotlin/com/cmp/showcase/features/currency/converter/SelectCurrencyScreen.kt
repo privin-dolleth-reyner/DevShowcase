@@ -35,6 +35,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.cpm.showcase.domain.currency.converter.entity.Currency
+import devshowcase.features.currency_converter.generated.resources.Res
+import devshowcase.features.currency_converter.generated.resources.select_currency_loading
+import devshowcase.features.currency_converter.generated.resources.select_currency_search_hint
+import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 
 
@@ -127,7 +131,7 @@ fun LoadingView(modifier: Modifier = Modifier) {
     ) {
         Column {
             CircularProgressIndicator()
-            Text(text = "Loading...")
+                Text(text = stringResource(Res.string.select_currency_loading))
         }
     }
 }
@@ -174,7 +178,7 @@ private fun SearchBar(
             textStyle = MaterialTheme.typography.h5,
             modifier = Modifier.fillMaxWidth().focusable(true),
             placeholder = {
-                Text("Enter currency code or country")
+                Text(text = stringResource(Res.string.select_currency_search_hint))
             }
         )
         Divider(Modifier.height(2.dp).fillMaxWidth().padding(vertical = 8.dp))

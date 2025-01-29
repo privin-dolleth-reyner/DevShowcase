@@ -20,6 +20,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import devshowcase.features.projects.generated.resources.Res
+import devshowcase.features.projects.generated.resources.projects_currency_converter
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun ProjectsScreen(onClick:(Int) -> Unit){
@@ -29,7 +32,7 @@ fun ProjectsScreen(onClick:(Int) -> Unit){
                 Button(onClick = {
                     onClick(1)
                 }){
-                    Text("Currency converter", style = MaterialTheme.typography.h5, textAlign = TextAlign.Center, modifier = Modifier)
+                    Text(stringResource(Res.string.projects_currency_converter), style = MaterialTheme.typography.h5, textAlign = TextAlign.Center, modifier = Modifier)
                 }
 
             }

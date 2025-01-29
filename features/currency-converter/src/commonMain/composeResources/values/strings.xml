@@ -1,0 +1,5 @@
+<resources>
+    <string name="currency_converter_title">Currency Converter</string>
+    <string name="select_currency_loading">Loading...</string>
+    <string name="select_currency_search_hint">Enter currency code or country</string>
+</resources>

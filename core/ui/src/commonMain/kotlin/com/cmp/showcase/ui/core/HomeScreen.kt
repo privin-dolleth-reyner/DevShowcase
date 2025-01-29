@@ -33,8 +33,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import devshowcase.core.ui.generated.resources.Res
+import devshowcase.core.ui.generated.resources.app_name
 import devshowcase.core.ui.generated.resources.switch_theme_icon
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun HomeScreen(
@@ -153,7 +155,7 @@ private fun Title(modifier: Modifier = Modifier, onToggleTheme: () -> Unit) {
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                "Compose Showcase",
+                text = stringResource(Res.string.app_name),
                 textAlign = TextAlign.Start,
                 style = MaterialTheme.typography.h5,
                 color = MaterialTheme.colors.onSurface,
