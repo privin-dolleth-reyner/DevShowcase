@@ -70,7 +70,7 @@ fun CurrencyConverterScreen(
                 verticalArrangement = Arrangement.SpaceBetween
             ) {
                 Title(onBackClick = onBackClick)
-                CurrencyPanel(state, modifier = Modifier.fillMaxWidth().weight(1.3f), onClick = {
+                CurrencyPanel(state, modifier = Modifier.fillMaxWidth().weight(1.3f).padding(8.dp), onClick = {
                     when(it.inputType){
                         InputType.BaseCurrency ->onChangeCurrency(true)
                         InputType.TargetCurrency -> onChangeCurrency(false)
@@ -82,7 +82,7 @@ fun CurrencyConverterScreen(
                     viewModel.inputPanel, onClick = {
                         viewModel.onInputClick(it)
                     },
-                    modifier = Modifier.fillMaxWidth().weight(1.5f)
+                    modifier = Modifier.fillMaxWidth().weight(1.5f).padding(8.dp)
                 )
             }
         }
@@ -197,7 +197,7 @@ fun InputButton(item: Item, onClick: (Item) -> Unit, modifier: Modifier = Modifi
 fun CurrencyPanel(state: State, modifier: Modifier, onClick: (Item) -> Unit) {
     val baseScrollState = rememberScrollState()
     val targetScrollState = rememberScrollState()
-    Column(modifier = modifier.padding(8.dp)) {
+    Column(modifier = modifier) {
         Currency(
             item = state.baseCurrencyCode,
             rate = state.baseToTargetRate,

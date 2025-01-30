@@ -31,8 +31,9 @@ import org.jetbrains.compose.resources.stringArrayResource
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-fun AboutScreen(onAboutDeveloperClick: ()-> Unit, modifier: Modifier = Modifier, onUrlClick: (String) -> Unit){
+fun AboutScreen(onAboutDeveloperClick: ()-> Unit, modifier: Modifier = Modifier, onUrlClick: (String) -> Unit, viewModel: HomeScreenViewModel){
     val scrollState = rememberScrollState()
+    viewModel.setSelectedNav(BottomNavigation.About)
     Column(
         modifier = Modifier
             .fillMaxSize()
