@@ -22,6 +22,7 @@ import com.cmp.showcase.ui.core.AboutScreen
 import com.cmp.showcase.ui.core.BottomNavigation
 import com.cmp.showcase.ui.core.HomeScreen
 import com.cmp.showcase.ui.core.HomeScreenRoutes
+import com.cmp.showcase.ui.core.HomeScreenViewModel
 import com.cpm.showcase.features.projects.ProjectsScreen
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -53,7 +54,11 @@ fun App(appSettings: AppSettings = koinInject()) {
     }
 }
 
-fun NavGraphBuilder.appGraph(navController: NavController, platformHandler: PlatformHandler, appSettings: AppSettings) {
+fun NavGraphBuilder.appGraph(
+    navController: NavController,
+    platformHandler: PlatformHandler,
+    appSettings: AppSettings
+) {
     navigation<AppRoutes.Graph>(
         startDestination = AppRoutes.Home()
     ) {
@@ -61,17 +66,31 @@ fun NavGraphBuilder.appGraph(navController: NavController, platformHandler: Plat
             val coroutineScope = rememberCoroutineScope()
             val shouldShowAboutScreen = args.arguments?.getBoolean("showAbout") ?: false
             val homeNavController = rememberNavController()
+            val homeScreenViewModel = koinViewModel<HomeScreenViewModel>()
             HomeScreen(
+                viewModel = homeScreenViewModel,
                 onToggleTheme = {
                     coroutineScope.launch {
                         appSettings.toggleTheme()
                     }
                 },
-                shouldShowAbout = shouldShowAboutScreen,
                 onBottomNavClick = {
                     when (it) {
-                        BottomNavigation.Home -> homeNavController.navigate(HomeScreenRoutes.Projects)
-                        BottomNavigation.About -> homeNavController.navigate(HomeScreenRoutes.About)
+                        BottomNavigation.Home -> {
+                            if (homeNavController.popBackStack().not()) {
+                                homeNavController.navigate(HomeScreenRoutes.Projects) {
+                                    launchSingleTop = true
+                                    restoreState = true
+                                }
+                            }
+                        }
+
+                        BottomNavigation.About -> {
+                            homeNavController.navigate(HomeScreenRoutes.About) {
+                                launchSingleTop = true
+                                restoreState = true
+                            }
+                        }
                     }
                 },
                 container = {
@@ -83,18 +102,23 @@ fun NavGraphBuilder.appGraph(navController: NavController, platformHandler: Plat
                             startDestination = if (shouldShowAboutScreen) HomeScreenRoutes.About else HomeScreenRoutes.Projects
                         ) {
                             composable<HomeScreenRoutes.Projects> {
-                                ProjectsScreen(onClick = {
-                                    navController.navigate(CurrencyConverterRoutes.Graph)
-                                })
+                                ProjectsScreen(
+                                    viewModel = homeScreenViewModel,
+                                    onClick = {
+                                        navController.navigate(CurrencyConverterRoutes.Graph)
+                                    }
+                                )
                             }
                             composable<HomeScreenRoutes.About> {
                                 AboutScreen(
+                                    viewModel = homeScreenViewModel,
                                     onAboutDeveloperClick = {
                                         navController.navigate(ProfileScreenRoutes.Graph)
                                     },
                                     onUrlClick = {
                                         platformHandler.handleUrl(it)
-                                    })
+                                    }
+                                )
                             }
                         }
                     }
@@ -157,7 +181,7 @@ fun NavGraphBuilder.profileGraph(navController: NavController, platformHandler: 
     }
 }
 
-fun onBackClick(navController: NavController, shouldShowAbout: Boolean = false){
+fun onBackClick(navController: NavController, shouldShowAbout: Boolean = false) {
     // Calling navigateUp() to navigate back to the previous screen is not stable at the time of development
     if (getPlatform().name.contains("ios", true)) {
         navController.navigate(AppRoutes.Home(shouldShowAbout)) {

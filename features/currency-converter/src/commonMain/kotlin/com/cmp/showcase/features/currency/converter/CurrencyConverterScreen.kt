@@ -48,6 +48,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import devshowcase.features.currency_converter.generated.resources.Res
+import devshowcase.features.currency_converter.generated.resources.currency_converter_title
+import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -67,7 +70,7 @@ fun CurrencyConverterScreen(
                 verticalArrangement = Arrangement.SpaceBetween
             ) {
                 Title(onBackClick = onBackClick)
-                CurrencyPanel(state, modifier = Modifier.fillMaxWidth().weight(1.3f), onClick = {
+                CurrencyPanel(state, modifier = Modifier.fillMaxWidth().weight(1.3f).padding(8.dp), onClick = {
                     when(it.inputType){
                         InputType.BaseCurrency ->onChangeCurrency(true)
                         InputType.TargetCurrency -> onChangeCurrency(false)
@@ -79,7 +82,7 @@ fun CurrencyConverterScreen(
                     viewModel.inputPanel, onClick = {
                         viewModel.onInputClick(it)
                     },
-                    modifier = Modifier.fillMaxWidth().weight(1.5f)
+                    modifier = Modifier.fillMaxWidth().weight(1.5f).padding(8.dp)
                 )
             }
         }
@@ -103,7 +106,7 @@ private fun Title(onBackClick: () -> Unit, modifier: Modifier = Modifier) {
                 )
             }
             Text(
-                "Currency Converter",
+                text = stringResource(Res.string.currency_converter_title),
                 textAlign = TextAlign.Start,
                 style = MaterialTheme.typography.h5,
                 color = MaterialTheme.colors.onSurface,
@@ -194,7 +197,7 @@ fun InputButton(item: Item, onClick: (Item) -> Unit, modifier: Modifier = Modifi
 fun CurrencyPanel(state: State, modifier: Modifier, onClick: (Item) -> Unit) {
     val baseScrollState = rememberScrollState()
     val targetScrollState = rememberScrollState()
-    Column(modifier = modifier.padding(8.dp)) {
+    Column(modifier = modifier) {
         Currency(
             item = state.baseCurrencyCode,
             rate = state.baseToTargetRate,

@@ -51,5 +51,7 @@
         <string>mailto</string>
         <string>https</string>
     </array>
+    <key>CFBundleDisplayName</key>
+    <string>DevShowcase</string>
 </dict>
 </plist>

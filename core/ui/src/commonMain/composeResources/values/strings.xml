@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">DevShowcase</string>
+
+<!--about screen-->
+    <string name="about_app">About the App</string>
+    <string name="about_summary">This app is built using Compose Multiplatform, a modern UI toolkit for building native user interfaces across Android and iOS platforms using a single Kotlin codebase. Designed with scalability and performance in mind, the app offers a seamless and responsive user experience across all supported devices.It follows a modular architecture, designed like a super app, and serves as a portfolio showcasing all the apps developed by me.</string>
+    <string name="about_developer">About Developer</string>
+    <string name="about_tech">Tech Stack</string>
+    <string-array name="about_tech_stack">
+        <item>• Dependency Injection (Koin): To manage dependencies efficiently</item>
+        <item>• Networking: Powered by Ktor for efficient API communication</item>
+        <item>• Persistence: Utilizes SqlDelight for shared database management</item>
+        <item>• Navigation: Compose navigation for seamless UI transitions</item>
+        <item>• Offline First Approach: Ensures data is always up-to-date</item>
+        <item>• Firebase firestore: For real-time database</item>
+        <item>• ViewModel: For state management</item>
+        <item>• Kotlin Coroutines: For asynchronous operations</item>
+        <item>• MVVM Architecture: Organized for modularity and maintainability</item>
+        <item>• Kotlin DSL: For better code readability</item>
+        <item>• Datastore: For storing user preferences</item>
+    </string-array>
+    <string name="about_repository">Repository</string>
+    <string name="about_git_repository">GitHub Repository</string>
+</resources>

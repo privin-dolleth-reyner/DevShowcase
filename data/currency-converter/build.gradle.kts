@@ -95,6 +95,11 @@ buildConfig {
         "APP_NAME",
         "\"${rootProject.name}\""
     )
+    buildConfigField(
+        "String",
+        "BASE_URL_CURRENCY_CONVERTER",
+        "\"https://v6.exchangerate-api.com\""
+    )
 }
 
 sqldelight{

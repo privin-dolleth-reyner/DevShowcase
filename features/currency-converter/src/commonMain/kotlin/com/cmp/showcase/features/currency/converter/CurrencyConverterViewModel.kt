@@ -101,8 +101,13 @@ class CurrencyConverterViewModel(
                 onSwapCurrency()
             }
             InputType.Backspace ->{
-                _state.value = _state.value.copy(baseAmount = _state.value.baseAmount.copy(title = _state.value.baseAmount.title.dropLast(1)))
-                convertAndUpdateView()
+                val baseAmount = _state.value.baseAmount.title
+                if (baseAmount.length > 1){
+                    _state.value = _state.value.copy(baseAmount = _state.value.baseAmount.copy(title = baseAmount.dropLast(1)))
+                    convertAndUpdateView()
+                }else{
+                    clear()
+                }
             }
             else -> {
                 // do nothing
@@ -118,8 +123,10 @@ class CurrencyConverterViewModel(
     }
 
     private fun convertAndUpdateView(){
+        val baseAmount = _state.value.baseAmount.title
+        if (baseAmount.isEmpty()) return
         try {
-            convert(_state.value.baseCurrencyCode.title, _state.value.targetCurrencyCode.title, _state.value.baseAmount.title.toDouble())
+            convert(_state.value.baseCurrencyCode.title, _state.value.targetCurrencyCode.title, baseAmount.toDouble())
         }catch (e : NumberFormatException){
             e.printStackTrace()
             clear()

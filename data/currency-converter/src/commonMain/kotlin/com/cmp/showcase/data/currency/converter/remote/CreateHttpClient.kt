@@ -27,7 +27,7 @@ fun createHttpClient(): HttpClient {
             logger = Logger.SIMPLE
         }
         install(DefaultRequest) {
-            url("https://v6.exchangerate-api.com")
+            url(BuildConfig.BASE_URL_CURRENCY_CONVERTER)
             contentType(ContentType.Application.Json)
             accept(ContentType.Application.Json)
         }

@@ -7,7 +7,7 @@ getAllCurrencies:
 SELECT * FROM CurrencyTable;
 
 insertCurrency:
-INSERT OR IGNORE INTO CurrencyTable(name, code)
+INSERT OR REPLACE INTO CurrencyTable(name, code)
 VALUES (?, ?);
 
 deleteAllCurrencies:
@@ -28,7 +28,7 @@ WHERE baseCurrencyCode == ?
 AND targetCurrencyCode == ?;
 
 insertExchangeRate:
-INSERT OR IGNORE INTO ExchangeRateTable(baseCurrencyCode, targetCurrencyCode, rate, lastUpdate, nextUpdate)
+INSERT OR REPLACE INTO ExchangeRateTable(baseCurrencyCode, targetCurrencyCode, rate, lastUpdate, nextUpdate)
 VALUES (?,?,?, ?,?);
 
 deleteAllExchangeRate:

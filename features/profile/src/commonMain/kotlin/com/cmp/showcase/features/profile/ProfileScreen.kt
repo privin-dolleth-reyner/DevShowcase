@@ -44,6 +44,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.boundsInWindow
 import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -187,7 +188,8 @@ fun Profile(
             EducationItem(
                 school = education.institution,
                 degree = education.degree,
-                duration = education.duration
+                duration = education.duration,
+                location = education.location
             )
         }
 
@@ -320,7 +322,8 @@ private fun ExperienceItem(
 private fun EducationItem(
     school: String,
     degree: String,
-    duration: String
+    duration: String,
+    location: String,
 ) {
     Card(
         modifier = Modifier
@@ -332,6 +335,7 @@ private fun EducationItem(
         Column(modifier = Modifier.padding(16.dp)) {
             Text(text = school, style = MaterialTheme.typography.subtitle1.copy(fontWeight = FontWeight.Bold))
             Text(text = degree, style = MaterialTheme.typography.subtitle2)
+            Text(text = location, style = MaterialTheme.typography.subtitle2)
             Text(text = duration, style = MaterialTheme.typography.body2)
         }
     }
@@ -372,8 +376,8 @@ private fun ProjectItem(
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Text(text = title, style = MaterialTheme.typography.subtitle1.copy(fontWeight = FontWeight.Bold))
-            Text(text = description, style = MaterialTheme.typography.body1)
-            Text(text = link, fontSize = 12.sp)
+            Text(text = description, style = MaterialTheme.typography.body1, modifier = Modifier.padding(top = 4.dp))
+            Text(text = AnnotatedString(link), style = MaterialTheme.typography.caption, color = MaterialTheme.colors.secondary, modifier = Modifier.padding(top = 4.dp))
         }
     }
 }
