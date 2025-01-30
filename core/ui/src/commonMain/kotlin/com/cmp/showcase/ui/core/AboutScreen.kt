@@ -83,7 +83,7 @@ fun AboutScreen(onAboutDeveloperClick: ()-> Unit, modifier: Modifier = Modifier,
 
         BasicText(
             modifier = Modifier.clickable {
-                onUrlClick("https://github.com/privin-dolleth-reyner/ComposeShowcase")
+                onUrlClick("https://github.com/privin-dolleth-reyner/DevShowcase")
             },
             text = AnnotatedString(stringResource(Res.string.about_git_repository)),
             style = MaterialTheme.typography.body1.copy(
