@@ -1,21 +1,45 @@
-This is a Kotlin Multiplatform project targeting Android, iOS, Web, Desktop.
+# DevCompose
 
-* `/composeApp` is for code that will be shared across your Compose Multiplatform applications.
-  It contains several subfolders:
-  - `commonMain` is for code that’s common for all targets.
-  - Other folders are for Kotlin code that will be compiled for only the platform indicated in the folder name.
-    For example, if you want to use Apple’s CoreCrypto for the iOS part of your Kotlin app,
-    `iosMain` would be the right folder for such calls.
+A **Jetpack Compose Multiplatform** project showcasing the power of Compose across **Android** and **iOS**. This app is designed to be a portfolio piece, demonstrating best practices in **Kotlin Multiplatform (KMP)** development.
 
-* `/iosApp` contains iOS applications. Even if you’re sharing your UI with Compose Multiplatform, 
-  you need this entry point for your iOS app. This is also where you should add SwiftUI code for your project.
+## ✨ Features
 
+- **Currency Converter**: Supports conversion for **161 countries**.
+- **Offline-First Approach**: Works even without an internet connection.
+- **Compose UI for Android & iOS**: A fully **declarative** UI using Jetpack Compose.
+- **More features coming soon!** 🚀
 
-Learn more about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html),
-[Compose Multiplatform](https://github.com/JetBrains/compose-multiplatform/#compose-multiplatform),
-[Kotlin/Wasm](https://kotl.in/wasm/)…
+## 📸 Screenshots
+_(Coming soon)_
 
-We would appreciate your feedback on Compose/Web and Kotlin/Wasm in the public Slack channel [#compose-web](https://slack-chats.kotlinlang.org/c/compose-web).
-If you face any issues, please report them on [GitHub](https://github.com/JetBrains/compose-multiplatform/issues).
+## 🏗️ Tech Stack
+- **Kotlin Multiplatform (KMP)**
+- **Jetpack Compose Multiplatform**
+- **SQLDelight** (for offline storage)
+- **Ktor Client** (for API communication)
+- **MVVM/MVI Architecture**
+- **Dependency Injection** (Koin)
+- **Datastore**
+- **Compose Navigation**
 
-You can open the web application by running the `:composeApp:wasmJsBrowserDevelopmentRun` Gradle task.
+## 🚀 Getting Started
+
+### Clone the Repository
+```sh
+git clone https://github.com/privin-dolleth-reyner/ComposeShowcase.git
+cd ComposeShowcase
+```
+
+### Run on Android
+```sh
+./gradlew androidApp:installDebug
+```
+
+### Run on iOS
+1. Open `iosApp/iosApp.xcworkspace` in **Xcode**.
+2. Select a simulator or connected device.
+3. Click **Run**.
+
+---
+Made with ❤️ using **Compose Multiplatform**.
+
