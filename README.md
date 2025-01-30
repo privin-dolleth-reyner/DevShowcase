@@ -1,4 +1,4 @@
-# DevCompose
+# DevShowcase
 
 A **Jetpack Compose Multiplatform** project showcasing the power of Compose across **Android** and **iOS**. This app is designed to be a portfolio piece, demonstrating best practices in **Kotlin Multiplatform (KMP)** development.
 
@@ -26,8 +26,8 @@ _(Coming soon)_
 
 ### Clone the Repository
 ```sh
-git clone https://github.com/privin-dolleth-reyner/ComposeShowcase.git
-cd ComposeShowcase
+git clone https://github.com/privin-dolleth-reyner/DevShowcase.git
+cd DevShowcase
 ```
 
 ### Run on Android
