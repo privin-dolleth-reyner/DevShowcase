@@ -9,9 +9,6 @@ A **Jetpack Compose Multiplatform** project showcasing the power of Compose acro
 - **Compose UI for Android & iOS**: A fully **declarative** UI using Jetpack Compose.
 - **More features coming soon!** 🚀
 
-## 📸 Screenshots
-_(Coming soon)_
-
 ## 🏗️ Tech Stack
 - **Kotlin Multiplatform (KMP)**
 - **Jetpack Compose Multiplatform**
@@ -21,6 +18,45 @@ _(Coming soon)_
 - **Dependency Injection** (Koin)
 - **Datastore**
 - **Compose Navigation**
+
+  
+## 📸 Screenshots
+
+Gif for Android and iOS
+
+<div style="display: flex; justify-content: center;">
+  <img src="readme-uploads/android.gif" alt="Android Screenshot" width="300">
+  <img src="readme-uploads/ios.gif" alt="Android Screenshot" width="300">
+</div>
+
+# Android
+
+<div style="display: flex; justify-content: center;">
+  <img src="readme-uploads/android_screenshots/l1.png" alt="Android Screenshot" width="300">
+  <img src="readme-uploads/android_screenshots/l2.png" alt="Android Screenshot" width="300">
+  <img src="readme-uploads/android_screenshots/l3.png" alt="Android Screenshot" width="300">
+</div>
+
+<div style="display: flex; justify-content: center;">
+  <img src="readme-uploads/android_screenshots/d1.png" alt="Android Screenshot" width="300">
+  <img src="readme-uploads/android_screenshots/d2.png" alt="Android Screenshot" width="300">
+  <img src="readme-uploads/android_screenshots/d3.png" alt="Android Screenshot" width="300">
+</div>
+
+# iOS
+
+<div style="display: flex; justify-content: center;">
+  <img src="readme-uploads/ios_screenshots/l1.png" alt="Android Screenshot" width="300">
+  <img src="readme-uploads/ios_screenshots/l2.png" alt="Android Screenshot" width="300">
+  <img src="readme-uploads/ios_screenshots/l3.png" alt="Android Screenshot" width="300">
+</div>
+
+<div style="display: flex; justify-content: center;">
+  <img src="readme-uploads/ios_screenshots/d1.png" alt="Android Screenshot" width="300">
+  <img src="readme-uploads/ios_screenshots/d2.png" alt="Android Screenshot" width="300">
+  <img src="readme-uploads/ios_screenshots/d3.png" alt="Android Screenshot" width="300">
+</div>
+
 
 ## 🚀 Getting Started
 
