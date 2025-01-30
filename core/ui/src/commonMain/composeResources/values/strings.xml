@@ -9,7 +9,7 @@
     <string-array name="about_tech_stack">
         <item>• Dependency Injection (Koin): To manage dependencies efficiently</item>
         <item>• Networking: Powered by Ktor for efficient API communication</item>
-        <item>• Persistence: Utilizes SQLDelight for shared database management</item>
+        <item>• Persistence: Utilizes SqlDelight for shared database management</item>
         <item>• Navigation: Compose navigation for seamless UI transitions</item>
         <item>• Offline First Approach: Ensures data is always up-to-date</item>
         <item>• Firebase firestore: For real-time database</item>
