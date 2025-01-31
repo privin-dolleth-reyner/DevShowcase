@@ -17,7 +17,7 @@ fun createDataStore(producePath:() -> String): DataStore<Preferences> =
 internal const val dataStoreFileName = "showcase.preferences_pb"
 
 interface AppSettings{
-    fun isDarkThemeEnabled(): Flow<Boolean>
+    fun isDarkThemeEnabled(isSystemInDarkTheme: Boolean = false): Flow<Boolean>
     suspend fun toggleTheme()
 }
 
@@ -26,9 +26,9 @@ class AppSettingsImpl(
 ): AppSettings{
     private val themeKey = booleanPreferencesKey("dark_mode")
 
-    override fun isDarkThemeEnabled(): Flow<Boolean> {
+    override fun isDarkThemeEnabled(isSystemInDarkTheme: Boolean): Flow<Boolean> {
         return dataStore.data.map {
-            it[themeKey] ?: false
+            it[themeKey] ?: isSystemInDarkTheme
         }
     }
 
