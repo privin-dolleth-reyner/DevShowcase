@@ -1,5 +1,6 @@
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import java.util.Properties
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -9,6 +10,11 @@ plugins {
     alias(libs.plugins.serialization)
     alias(libs.plugins.googleGmsGoogleServices)
     alias(libs.plugins.crashlytics)
+}
+
+val secretKeyProperties by lazy {
+    val secretKeyPropertiesFile = rootProject.file("secrets.properties")
+    Properties().apply { secretKeyPropertiesFile.inputStream().use { secret -> load(secret) } }
 }
 
 kotlin {
@@ -69,9 +75,22 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+
+    signingConfigs {
+        create("release") {
+            keyAlias = secretKeyProperties.getProperty("keyAlias")
+            keyPassword = secretKeyProperties.getProperty("keyPassword")
+            storeFile = file(secretKeyProperties.getProperty("storeFile"))
+            storePassword = secretKeyProperties.getProperty("storePassword")
+            println(keyAlias)
+            println(storeFile)
+        }
+    }
+
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false
+            signingConfig = signingConfigs.getByName("release")
         }
     }
     compileOptions {

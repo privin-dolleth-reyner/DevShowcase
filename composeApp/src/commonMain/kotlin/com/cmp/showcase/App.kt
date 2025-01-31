@@ -36,9 +36,7 @@ expect fun MyTheme(darkTheme: Boolean, content: @Composable() () -> Unit)
 @Composable
 @Preview
 fun App(appSettings: AppSettings = koinInject()) {
-    val isDarkTheme by appSettings.isDarkThemeEnabled().collectAsStateWithLifecycle(
-        isSystemInDarkTheme()
-    )
+    val isDarkTheme by appSettings.isDarkThemeEnabled(isSystemInDarkTheme()).collectAsStateWithLifecycle(false)
     MyTheme(isDarkTheme) {
         val navController = rememberNavController()
         val platformHandler = koinInject<PlatformHandler>()
