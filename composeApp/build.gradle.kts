@@ -82,8 +82,6 @@ android {
             keyPassword = secretKeyProperties.getProperty("keyPassword")
             storeFile = file(secretKeyProperties.getProperty("storeFile"))
             storePassword = secretKeyProperties.getProperty("storePassword")
-            println(keyAlias)
-            println(storeFile)
         }
     }
 
