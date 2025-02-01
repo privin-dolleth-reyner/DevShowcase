@@ -1,5 +1,7 @@
 # DevShowcase
 
+[<img src="readme-uploads/playstore.png">](https://play.google.com/store/apps/details?id=com.cmp.showcase&pcampaignid=web_share)
+
 A **Jetpack Compose Multiplatform** project showcasing the power of Compose across **Android** and **iOS**. This app is designed to be a portfolio piece, demonstrating best practices in **Kotlin Multiplatform (KMP)** development.
 
 ## ✨ Features
