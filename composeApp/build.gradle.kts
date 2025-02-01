@@ -68,7 +68,7 @@ android {
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
         versionCode = 1
-        versionName = "1.0"
+        versionName = "1.0.0"
     }
     packaging {
         resources {
@@ -82,14 +82,14 @@ android {
             keyPassword = secretKeyProperties.getProperty("keyPassword")
             storeFile = file(secretKeyProperties.getProperty("storeFile"))
             storePassword = secretKeyProperties.getProperty("storePassword")
-            println(keyAlias)
-            println(storeFile)
         }
     }
 
     buildTypes {
         getByName("release") {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"))
             signingConfig = signingConfigs.getByName("release")
         }
     }
